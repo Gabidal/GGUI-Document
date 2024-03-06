@@ -3,6 +3,7 @@ let Headers = {
         "Symbols",
         "Time",
         "Constants",
+        "Button States",
         "Color",
         "UTF Flags",
         "Memory Flags",
@@ -45,7 +46,15 @@ let Headers = {
     ]
 }
 
-const Header_Backup = structuredClone(Headers)
+function Reverse(dict){
+    var reversed = {}
+    for (const [Header, Content] of Object.entries(dict)){
+        reversed[Header] = Content.reverse()
+    }
+    return reversed
+}
+
+const Header_Backup = Reverse(structuredClone(Headers))
 
 function Generate_List(){
     const List = document.getElementById("menu")
@@ -152,4 +161,30 @@ function Change_Order(alphabetical){
 
     // Generate the list again
     Generate_List()
+}
+
+function Highlight_Links(){
+    // goes through the paragraphs and turns them into a clickable links which would then use the 'Goto()' function with he name of the link
+    const Main = document.getElementById("main")
+    for (const Paragraph of Main.getElementsByTagName("p")){
+        let Name = Paragraph.innerText
+
+        // concatenate the string into words:
+        let words = Name.split(/(\s|[.,!?(){}[\]])+/)
+
+        // go through each word, if the current word appears in the Headers map, then make it a link element
+        for (let i = 0; i < words.length; i++){
+            for (const [key, value] of Object.entries(Headers)){
+                if (Headers[key].includes(words[i])){
+                    words[i] = `<a class="Link" onclick="Goto('${words[i]}')">${words[i]}</a>`
+                }
+            }
+        }
+
+        // transform the list back into a string
+        Name = words.join("")
+
+        // set the paragraph innerHTML to the new string
+        Paragraph.innerHTML = Name
+    }
 }

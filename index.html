@@ -13,9 +13,9 @@
                 <div style="display: flex; align-items: center;">
                     <img src="GGUI_LOGO.png" alt="Logo" class="Logo">
                     <div class="Static2">
-                        <h2>Lightweight terminal user interface</h2>
+                        <h2 class="GGUI">Lightweight terminal user interface</h2>
                         <ul class="OrderList">
-                            <button class="Ab" onclick="Change_Order(true)">Ab</button>
+                            <button class="Aa" onclick="Change_Order(true)">Aa</button>
                             <button class="Code" onclick="Change_Order(false)">Code</button>
                         </ul>
                     </div>
@@ -28,6 +28,34 @@
 
         <div class="Static2">
             <div class="Main" id="main">
+                <h3 class="Symbols" id="Symbols">GGUI::SYMBOLS</h3>
+                <p>
+                    Contains commonly used Unicode characters and other constant used to render the UTF elements to the finalized buffer.
+                </p>
+                <h3 class="Time" id="Time">GGUI::TIME</h3>
+                <p>
+                    Contains useful time constants to scale with.
+                </p>
+                <h3 class="Button State" id="Button State">GGUI::BUTTON_STATE</h3>
+                <p>
+                    Used to store the keyboard states for every individual state.
+                </p>
+                <h3 class="Constants" id="Constants">GGUI::CONSTANTS</h3>
+                <p>
+                    Contains constants about ASCII Escape Code Sequences. 
+                </p>
+                <h3 class="Button States" id="Button States">GGUI::BUTTON_STATES</h3>
+                <p>
+                    Contains all the key values for the KEYBOARD_STATES
+                </p>
+                <h3 class="RGB" id="RGB">GGUI::RGB</h3>
+                <p>
+                    The main class to represent colors in abstract format, before it gets transformed into UTF.
+                </p>
+                <h3 class="RGBA" id="RGBA">GGUI::RGBA</h3>
+                <p>
+                    Extends: RGB class, to add Alpha channel.
+                </p>
                 <h3 class="Element" id="Element">Element</h3>
                 <p>
                     Test paragraph 1
@@ -44,6 +72,7 @@
         </div>
 
         <script>
+            Highlight_Links()
             Generate_List()
             //hljs.highlightAll();
         </script>

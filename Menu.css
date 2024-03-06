@@ -18,10 +18,13 @@ body{
 }
 
 .Logo{
-
     width: 5vw;
     height: 5vw;
+}
 
+.GGUI{
+    
+    padding: 0.5em 0.5em;
 }
 
 .Main{
@@ -51,6 +54,11 @@ body{
     text-align: right;
 }
 
+.USE {
+    font-family: monospace;
+    color: chartreuse;
+}
+
 ul{
     padding-left: 0;
 }
@@ -67,7 +75,7 @@ li:hover{
 .Link{
     display: inline;
     text-decoration: underline;
-
+    transition-duration: 0.4s;
 }
 
 .Link:hover{
@@ -89,8 +97,33 @@ li:hover{
 
 h3{
     padding-top: 5em;
+    font-family: monospace;
+    font-size: 2em;
+    width: 90%;
+    border-bottom: 0.1em solid rgb(255, 255, 255, 0.678);
+    border-radius: 0.2em;
 }
 
+button{
+    background-color: rgba(255, 255, 255, 0.678);
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    margin: 0.25em 0.25em;
+    cursor: pointer;
+    border-radius: 0.2em;
+    padding: 0.5em 0em;
+    transition-duration: 0.4s;
+    width: 20%;
+    height: 20%;
+}
+
+button:hover{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+}
 
 .Selected{
     animation-duration: 2s;
