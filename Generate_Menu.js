@@ -1,4 +1,4 @@
-const Headers = { 
+let Headers = { 
     "Namespaces": [
         "Symbols",
         "Time",
@@ -12,9 +12,40 @@ const Headers = {
         "Settings"
     ],
     "Classes": [
-        "Element"
+        "Button State",
+        "RGB",
+        "RGBA",
+        "Vector2",
+        "Vector3",
+        "Coordinates",
+        "UTF",
+        "Event",
+        "Input",
+        "Action",
+        "Memory",
+        "Margin",
+        "Value",
+        "Number Value",
+        "RGB Value",
+        "Bool Value",
+        "Coordinates Value",
+        "Margin Value",
+        "Shadow Value",
+        "Stain",
+        "Element",
+        "Text Field",
+        "File Streamer",
+        "Button",
+        "Switch",
+        "Window",
+        "List View",
+        "HTML",
+        "Progress Bar",
+        "Canvas"
     ]
 }
+
+const Header_Backup = structuredClone(Headers)
 
 function Generate_List(){
     const List = document.getElementById("menu")
@@ -46,7 +77,30 @@ function Generate_List(){
             Item.appendChild(Sub_Element)
         }
         
-        List.appendChild(Item)
+        // check if the list already has an item named in the summary like this one which is about to be inserted, if there already is one, then replace only its child and keep the open attribute on the detail
+        let Found_Previous_Item_Form = false
+        for (const Old_Item of List.getElementsByTagName("details")){
+            if (Old_Item.getElementsByTagName("summary")[0].innerText === Header){
+                
+                // clear
+                for (let i = Old_Item.childNodes.length - 1; i >= 0; i--){
+                    Old_Item.childNodes[i].remove()
+                }
+
+                for (let i = Item.childNodes.length - 1; i >= 0; i--){
+
+                    Old_Item.appendChild(Item.childNodes[i])
+
+                }
+
+                Found_Previous_Item_Form = true
+                break
+            }
+        }
+
+        if (!Found_Previous_Item_Form){
+            List.appendChild(Item)
+        }
 
     }
 }
@@ -80,4 +134,22 @@ function Goto(Title_Name){
     Element.className = "Tittle Selected"
 
     Main.scrollTo({behavior: "smooth", top: Element.offsetTop - 10})
+}
+
+// if the parameter is false, then return the order back to what it was, which is stored in the spare variable: Header_Backup
+function Change_Order(alphabetical){
+    const List = document.getElementById("menu")
+    const Main = document.getElementById("main")
+
+    if (alphabetical){
+        for (const Header in Headers){
+            // needs to be reverse, since the move operation is done reversely
+            Headers[Header] = Headers[Header].sort().reverse()
+        }
+    } else {
+        Headers = structuredClone(Header_Backup)
+    }
+
+    // Generate the list again
+    Generate_List()
 }

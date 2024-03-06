@@ -45,6 +45,12 @@ body{
     height: 100%;
 }
 
+.OrderList{
+    padding: 0.5em;
+    list-style-type: none;
+    text-align: right;
+}
+
 ul{
     padding-left: 0;
 }
