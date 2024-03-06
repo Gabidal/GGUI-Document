@@ -1,22 +1,50 @@
-const Headers = [ 
-    "Title name 1",
-]
+const Headers = { 
+    "Namespaces": [
+        "Symbols",
+        "Time",
+        "Constants",
+        "Color",
+        "UTF Flags",
+        "Memory Flags",
+        "Styles",
+        "Flags",
+        "State",
+        "Settings"
+    ],
+    "Classes": [
+        "Element"
+    ]
+}
 
 function Generate_List(){
     const List = document.getElementById("menu")
     const Main = document.getElementById("main")
 
-    for (const Header of Headers){
-        const Item = document.createElement("li")
-        Item.className = "Element"
-        Item.onclick = () => { 
-            Goto(Header)
-            for (const I of List.getElementsByTagName("li")){
-                I.style.backgroundColor = "rgba(255, 255, 255, 0)"
+    for (const [Header, Content] of Object.entries(Headers)){
+        const Item = document.createElement("details")
+        Item.className = "Header List Element"
+
+        // Set the title as an summary tag as the first element:
+        const Summary = document.createElement("summary")
+        Summary.innerText = Header
+        Item.appendChild(Summary)
+
+        // now add the content to the item
+        for (const Sub_Item of Content){
+            const Sub_Element = document.createElement("li")
+            Sub_Element.innerText = Sub_Item
+            Sub_Element.onclick = () => { 
+                // Automatically scroll to the actual paragraph title.
+                Goto(Sub_Item)
+
+                // go through the paragraph titles and set temporarily the background to a lighter tone. 
+                for (const I of List.getElementsByTagName("li")){
+                    I.style.backgroundColor = "rgba(255, 255, 255, 0)"
+                }
+                Sub_Element.style.backgroundColor = "rgba(255, 255, 255, 0.255)"
             }
-            Item.style.backgroundColor = "rgba(255, 255, 255, 0.255)"
+            Item.appendChild(Sub_Element)
         }
-        Item.innerHTML = Header
         
         List.appendChild(Item)
 
