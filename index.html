@@ -3,8 +3,8 @@
         <meta charset="UTF-8">
         <script type="text/javascript" src="Generate_Menu.js"></script>
         <link rel="stylesheet" href="Menu.css"></link>
-        <!-- <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/default.min.css"> -->
-        <!-- <script src="//unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script> -->
+        <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/styles/default.min.css">
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.2.0/highlight.min.js"></script>
         <link rel="stylesheet" href="Dark.css"></link>
      </head>
     <body>
@@ -87,18 +87,213 @@
                 <p>
                     Container class for abstract representation of the individual CELL to be drawn to the Terminal.
                 </p>
-                <h3 class="Event" id="Event">GGUI::EVENT</h3>
+                <h3 class="Event" id="Event">GGUI::Event</h3>
                 <p>
                     Mainly blank class to help OOP structure with Criteria to start the Event and its extending classes.
                 </p>
-                
+                <h3 class="Input" id="Input">GGUI::Input</h3>
+                <p>
+                    Extends Event class to add the location of the input as mouse input and the data the mouse conveys, also used to conveys data from the virtual KEYBOARD_STATES.
+                    The mouse data is passed as a Coordinates object.
+                </p>
+                <h3 class="Action" id="Action">GGUI::Action</h3>
+                <p>
+                    Extends Event class to add a Job, which is then executed when the Event Criteria is met.
+                </p>
+                <h3 class="Memory Flags" id="Memory Flags">GGUI::MEMORY_FLAGS</h3>
+                <p>
+                    Contains bitmasks used by the Memory class to tell if the Memory is Prolonged or Re-Triggered on construct. 
+                </p>
+                <h3 class="Memory" id="Memory">GGUI::Memory</h3>
+                <p>
+                    Extends Action class to add the start time and the length at which the memory Job is then activated.
+                </p>
+                <h3 class="Margin" id="Margin">GGUI::Margin</h3>
+                <p>
+                    Used by the Margin Value to be accessed as the Value member of the VALUE oop object pointer.
+                </p>
+                <h3 class="Value Types" id="Value Types">GGUI::VALUE_TYPES</h3>
+                <p>
+                    Contains the type of which the base class Value is then casted to.
+                </p>
+                <h3 class="Value" id="Value">GGUI::Value</h3>
+                <p>
+                    The base class to represent the all different value types.
+                    Note that all classes which extend this class, will have to have their own member named as Value, and that they also have their own custom override functions for:
+                    <ul>
+                        <li>VALUE* Copy()</li>
+                        <li>VALUE* Parse(std::string val)</li>
+                    </ul>
+                </p>
+                <h3 class="Number Value" id="Number Value">GGUI::Number_Value</h3>
+                <p>
+                    Extends Value class to add the number value.
+                </p>
+                <h3 class="RGB Value" id="RGB Value">GGUI::RGB_Value</h3>
+                <p>
+                    Extends Value class to add the RGB value.
+                </p>
+                <h3 class="Bool Value" id="Bool Value">GGUI::Bool_Value</h3>
+                <p>
+                    Extends Value class to add the bool value.
+                </p>
+                <h3 class="Coordinates Value" id="Coordinates Value">GGUI::Coordinates_Value</h3>
+                <p>
+                    Extends Value class to add the Coordinates value.
+                </p>
+                <h3 class="Margin Value" id="Margin Value">GGUI::Margin_Value</h3>
+                <p>
+                    Extends Value class to add the Margin value.
+                </p>
+                <h3 class="Shadow Value" id="Shadow Value">GGUI::Shadow_Value</h3>
+                <p>
+                    Extends Value class to add the Shadow value.
+                </p>
+                <h3 class="Styles" id="Styles">GGUI::STYLES</h3>
+                <p>
+                    Contains the string namings for all the different styling methods.
+                </p>
+                <h3 class="Stain Type" id="Stain Type">GGUI::STAIN_TYPE</h3>
+                <p>
+                    Contains bitmasks representing the different rendering conditions.
+                </p>
+                <h3 class="Stain" id="Stain">GGUI::Stain</h3>
+                <p>
+                    Contains the data for what to refresh in the local rendering buffer.
+                </p>
+                <h3 class="Flags" id="Flags">GGUI::Flags</h3>
+                <p>
+                    Legacy way to call the Styling names, not used anymore.
+                </p>
+                <h3 class="State" id="State">GGUI::State</h3>
+                <p>
+                    Contains the different states in which an Element can be in:
+                    <ul>
+                        <li>UNKNOWN</li>
+                        <li>RENDERED</li>
+                        <li>HIDDEN</li>
+                    </ul>
+                </p>
+                <h3 class="Settings" id="Settings">GGUI::SETTINGS</h3>
+                <p>
+                    Contains the preferences for which GGUI adapts.
+                </p>
+                <h3 class="Element" id="Element">GGUI::Element</h3>
+                <p>
+                    The base class for all the different renderable elements.
+                </p>
+                <h3 class="Text Location" id="Text Location">GGUI::TEXT_LOCATION</h3>
+                <p>
+                    Contains the different locations in which the text can be anchored:
+                    <ul>
+                        <li>Left</li>
+                        <li>Center</li>
+                        <li>Right</li>
+                    </ul>
+                </p>
+                <h3 class="Text Field" id="Text Field">GGUI::Text_Field</h3>
+                <p>
+                    Extends the Element class to add the text field.
+                    Also has the capability to anchor the text into different Text Locations.
+                    Can accept user input and store written data into itself when `Allow_Text_Input` is enabled.
+                    Also allows the user to register custom handler function to handle user given text input with: 
+                    <pre>
+                        <code class="language-cpp">
+    Input(std::function< void(char)>Then)
+                        </code>
+                    </pre>
+                </p>
+                <h3 class="File Streamer" id="File Streamer">GGUI::FILE_STREAMER</h3>
+                <p>
+                    File handler for HTML reader in GGUI, capable of notifying custom function handler on when the file is changed.
+                    <pre>
+                        <code class="language-cpp">
+    void Add_File_Stream_Handle(std::string File_Handle, std::function< void()> Handle)
+                        </code>
+                    </pre>
+                </p>
+                <h3 class="Button" id="Button">GGUI::Button</h3>
+                <p>
+                    Extends Text Field class to add easy to use On_Click function.
+                </p>
+                <h3 class="Abstract_Frame_Buffer" id="Abstract_Frame_Buffer">GGUI::Abstract_Frame_Buffer</h3>
+                <p>
+                    A vector of UTF, representing the renderable buffer. 
+                </p>
+                <h3 class="Frame_Buffer" id="Frame_Buffer">GGUI::Frame_Buffer</h3>
+                <p>
+                    A string containing the final data which is then written to the terminal file handle.
+                </p>
+                <h3 class="Pause_Render" id="Pause_Render">GGUI::Pause_Render</h3>
+                <p>
+                    An Atomic Boolean representing if the rendering pipeline is paused or not.
+                </p>
+                <h3 class="Pause_Event_Thread" id="Pause_Event_Thread">GGUI::Pause_Event_Thread</h3>
+                <p>
+                    An Atomic Boolean representing if the Event pipeline is paused or not. 
+                </p>
+                <h3 class="Max_Width" id="Max_Width">GGUI::Max_Width</h3>
+                <p>
+                    A variable containing the Terminal Width.
+                </p>
+                <h3 class="Max_Height" id="Max_Height">GGUI::Max_Height</h3>
+                <p>
+                    A variable containing the Terminal Height.
+                </p>
+                <h3 class="Remember" id="Remember">GGUI::Remember</h3>
+                <p>
+                    A vector containing the Memory to be run at given time. 
+                </p>
+    
+                <h3 class="Naming Practices" id="Naming Practices">GGUI Naming Practices</h3>
+                <p>
+                    In GGUI classes or containers like namespaces or enums follow are in caps if the container or class represents a multiple.
+                    Examples:
+                    <ul>
+                        <li>COORDINATES</li>
+                        <li>VALUE_TYPES</li>
+                        <li>Element</li>
+                    </ul>
+
+                    Notice how the name 'Element' represents a singular and thus is not all caps, meanwhile the 'COORDINATES' or 'VALUE_TYPES' are in all caps, because they contain or represent multiple.
+                    Other cases where the name is in all caps is with abbreviations or any enum class.
+                    <br/>
+                    All named variables which consist of multiple words are connected with an underscore.
+                </p>
+
+                <h3 class="Building For Termux" id="Building For Termux">Building For Termux</h3>
+                <p>
+                    When building for Termux especially for Android install the following packages:
+                    <ul>
+                        <li>meson</li>
+                        <li>g++</li>
+                        <li>libandroid-execinfo</li>
+                    </ul>
+
+                    After installing the required builder tools, you can build the project by the following:
+                    <pre>
+                        <code class="terminal">
+    meson setup Build
+    meson compile -C Build
+                        </code>
+                    </pre>
+
+                    If you have previously already builded change the first line into:
+                    <pre>
+                        <code class="language-cpp">
+    meson setup --wipe Build
+                        </code>
+                    </pre>
+
+                    And then add the other lines after it.
+                </p>
             </div>
         </div>
 
         <script>
             Highlight_Links()
             Generate_List()
-            //hljs.highlightAll();
+            hljs.highlightAll();
         </script>
     </body>
 

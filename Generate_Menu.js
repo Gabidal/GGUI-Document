@@ -10,7 +10,8 @@ let Headers = {
         "Styles",
         "Flags",
         "State",
-        "Settings"
+        "Settings",
+        "Text Location"
     ],
     "Classes": [
         "Button State",
@@ -43,6 +44,38 @@ let Headers = {
         "HTML",
         "Progress Bar",
         "Canvas"
+    ],
+    "Syntax": [
+        "Naming Practices"
+    ],
+    "Globals": [
+        "Abstract_Frame_Buffer",
+        "Frame_Buffer",
+        "Pause_Render",
+        "Pause_Event_Thread",
+        "Max_Width",
+        "Max_Height",
+        "Remember",
+        "Event_Handlers",
+        "Inputs",
+        "Element_Names",
+        "Focused_On",
+        "Hovered_On",
+        "Mouse",
+        "Mouse_Movement_Enabled",
+        "KEYBOARD_STATES",
+        "UPDATE_SPEED_MIILISECONDS",
+        "Inputs_Per_Second",
+        "Inputs_Per_Query",
+        "Classes",
+        "Class_Names",
+        "Main",
+        "Outboxed_Elements",
+    ],
+    "Build": [
+        "Windows",
+        "Unix",
+        "Building For Termux"
     ]
 }
 
