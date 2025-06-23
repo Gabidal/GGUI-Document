@@ -1,0 +1,73 @@
+<h1>
+    Event - Basis of I/O
+</h1>
+<p>
+    The Event structure only hold one value which is an u64bit size bit mask of criteria of which an EventHandler needs to have for it to be activated.
+</p>
+
+<h1>
+    Input - Giver of trigger
+</h1>
+<p>
+    When an keyboard event occurs or a mouse event occurs, this Input object is created with the description of what is being triggered in the Criteria field given by the Event base class.
+</p>
+
+<h1>
+    Action - Taker of trigger
+</h1>
+<p>
+    When inputs occur, all registered EventHandlers, e.g Action objects are combed through to find the Action whose Criteria flags equals to the corresponding Input criteria.
+    If an match is found then the function pointer "Job" is run, the Job can return an boolean whether it wants to halt the propagation of said event or not.
+</p>
+
+<h1>
+    Memory - Timed trigger
+</h1>
+<p>
+    Memory is a Action inheritant, whose job is to trigger after a specific time, after the trigger has been matched.
+    Memories on activation will run their assigned "Job". Memories can also be given an "re-trigger" flag, which will prolong the current memory if another is triggered, instead of spawning another memory.
+</p>
+
+<h1>
+    STAIN - optimized flush agent
+</h1>
+<p>
+    The STAIN enum contains bit masks each corresponding to each part of an element render pipeline, so that redundant re-calculation would not occur.
+    This gives GGUI the ability to automatically notice if even anything needs to be re-drawn or if it can just use the previous render buffer.
+</p>
+
+<h1>
+    Guard - Atomic helper
+</h1>
+<p>
+    The Guard class is a simple wrapper for the mutexes and their condition variable setup and safe call, with automatic wrapping when called with the caller operator overload.
+</p>
+
+<h1>
+    FVector2
+</h1>
+<p>
+    Simple two floating point, vector structure.
+</p>
+
+<h1>
+    FVector3
+</h1>
+<p>
+    Inherits FVector2 and adds the third dimension.
+</p>
+
+<h1>
+    IVector2
+</h1>
+<p>
+    Simple integer vector made up two s16bit containers. 
+</p>
+
+<h1>
+    IVector3
+</h1>
+<p>
+    Inherits IVector2 and adds the third dimension.
+</p>
+

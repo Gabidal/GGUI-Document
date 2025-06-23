@@ -1,7 +1,10 @@
 let Headers = { 
     "concepts": [
         "color",
-        "UTF"
+        "utf",
+        "fileStream",
+        "logger",
+        "types"
     ]
 }
 
@@ -10,11 +13,37 @@ let HeaderTranslations = {
         "RGB",
         "RGBA"
     ],
-    "UTF": [
+    "utf": [
         "Compact String",
         "Compact_String",
         "Super String",
         "Super_String"
+    ],
+    "fileStream": [
+        "CMD",
+        "filePosition",
+        "bufferCapture"
+    ],
+    "logger": [
+        "report",
+        "reportStack",
+        "report Stack"
+    ],
+    "types": [
+        "FVector2",
+        "FVector3",
+        "IVector2",
+        "IVector3",
+        "Event",
+        "Input",
+        "Action",
+        "EventHandler",
+        "Memory",
+        "STAIN",
+        "Stain",
+        "Dirty",
+        "Guard",
+        "Atomic"
     ]
 }
 
@@ -165,6 +194,7 @@ function display_menu(){
     .then(html => {
         document.getElementById('menu-container').innerHTML = html;
         // Change_Order(true)
+        Generate_List()
     });
 }
 
@@ -173,7 +203,7 @@ function dev_display(file){
     .then(response => response.text())
     .then(html => {
         document.getElementById('content-container').innerHTML = html;
-        Change_Order(true)
+        Generate_List()
         Highlight_Links()
         hljs.highlightAll();
     });
