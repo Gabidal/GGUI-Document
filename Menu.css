@@ -1,25 +1,33 @@
-
 body{
     display: flex;
     width: 100%;
     height: 100%;
     background-color: rgb(31, 31, 31);
     color: rgb(177, 177, 177);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-size: 1.05em;
+    letter-spacing: 0.01em;
     overflow: hidden;
 }
 
-.NavigationMenuContainer{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    padding-right: 15px;
-    padding-bottom: 15px;
+.float-img-left {
+    float: left;
+    max-height: 15%;
+    width: auto;
+    margin: 0 1em 1em 0;
+}
+
+.float-img-right {
+    float: right;
+    max-height: 20%;
+    width: auto;
+    margin: 0 6vw 1em 0;
 }
 
 .Logo{
-    width: 5vw;
-    height: 5vw;
+    max-width: 70%;
+    max-height: auto;
+    margin: 0 1em 1em 0;
 }
 
 .GGUI{
@@ -69,20 +77,26 @@ ul{
 li{
     padding: 0.5em;
     list-style-type: none;
+    border-radius: 0.2em;
+    transition: background 0.2s, color 0.2s;
 }
 
 li:hover{
-    color: rgb(240, 240, 240);
+    background: #23272f;
+    color: #fff;
 }
 
 .Link{
     display: inline;
     text-decoration: underline;
     transition-duration: 0.4s;
+    color: #4a90e2;
+    font-weight: 500;
 }
 
 .Link:hover{
-    color: rgb(240, 240, 240);
+    color: #357ab8;
+    text-decoration: underline;
 }
 
 .hljs{
@@ -93,57 +107,123 @@ li:hover{
     border-color:rgba(172, 0, 57, 0.63);
 }
 
-.Music{
-    width: 100%;
-    height: 1em;
-}
-
 h3{
     padding-top: 5em;
-    font-family: monospace;
+    font-family: 'Segoe UI', monospace;
     font-size: 2em;
+    font-weight: 600;
     width: 90%;
-    border-bottom: 0.1em solid rgb(255, 255, 255, 0.678);
-    border-radius: 0.2em;
+    border-bottom: 2px solid #e1e2e6;
+    color: #222;
 }
 
 button{
-    background-color: rgba(255, 255, 255, 0.678);
-    border: none;
-    color: black;
+    background: linear-gradient(135deg, #f5f6fa 60%, #e1e2e6 100%);
+    border: 1.5px solid #d1d1d1;
+    color: #222;
     text-align: center;
     text-decoration: none;
     font-size: 1em;
-    margin: 0.25em 0.25em;
+    margin: 0.5em 0.5em;
     cursor: pointer;
-    border-radius: 0.2em;
-    padding: 0.5em 0em;
-    transition-duration: 0.4s;
-    width: 20%;
-    height: 20%;
+    border-radius: 0.4em;
+    padding: 0.7em 1.2em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 1.5px 3px rgba(0,0,0,0.03);
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s, border 0.25s;
+    width: auto;
+    min-width: 120px;
+    height: auto;
+    font-weight: 500;
+    outline: none;
 }
 
-button:hover{
-    background-color: rgba(255, 255, 255, 0.9);
-    color: black;
+button:hover, button:focus{
+    background: linear-gradient(135deg, #e9ecef 60%, #f5f6fa 100%);
+    color: #1a1a1a;
+    border: 1.5px solid #bdbdbd;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .Selected{
-    animation-duration: 2s;
+    animation-duration: 1.2s;
     animation-name: flash;
     animation-iteration-count: 1;
-    transition: ease-in-out 2s;
+    transition: box-shadow 0.3s, border 0.3s;
+    border: 2px solid #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
 
 @keyframes flash {
     0% {
-        background-color: rgb(240, 240, 240);
+        background-color: #e3f0ff;
     }
     50% {
-        background-color: rgba(255, 255, 255, 0.678);
+        background-color: #f5f6fa;
     }
     100% {
-        background-color: rgba(240, 240, 240, 0);
+        background-color: #e3f0ff00;
     }
 }
 
+#menu > details {
+    margin-left: 1em;
+    padding-left: 0;
+    border-left: none;
+}
+
+#menu > details > li {
+    border-left: 1px solid #444;
+    padding-left: 1em;
+}
+
+#menu summary {
+    list-style: none;
+}
+#menu details > summary::-webkit-details-marker {
+    display: none;
+}
+#menu details > summary::marker {
+    display: none;
+}
+#menu details > summary {
+    position: relative;
+    cursor: pointer;
+    padding-right: 1.5em;
+}
+#menu details[open] > summary::after,
+#menu details > summary::after {
+    content: '▶';
+    position: absolute;
+    right: 0.2em;
+    transition: transform 0.2s;
+}
+#menu details[open] > summary::after {
+    transform: rotate(90deg);
+}
+
+p {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+h1 {
+    font-family: 'system-ui';
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #f0f0f0;
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    margin: 0.5em auto 0 auto;
+    width: 60%;
+    border-bottom: 1px solid #444;
+}

@@ -1,6 +1,13 @@
 let Headers = { 
     "concepts": [
-        "RGB"
+        "color"
+    ]
+}
+
+let HeaderTranslations = {
+    "color": [
+        "RGB",
+        "RGBA"
     ]
 }
 
@@ -17,9 +24,13 @@ const Header_Backup = Reverse(structuredClone(Headers))
 function Generate_List(){
     const List = document.getElementById("menu")
 
+    if (!List)
+        return
+    
     for (const [Header, Content] of Object.entries(Headers)){
         const Item = document.createElement("details")
         Item.className = "Header List Element"
+        Item.open = true; // Make the details open by default
 
         // Set the title as an summary tag as the first element:
         const Summary = document.createElement("summary")
@@ -114,7 +125,7 @@ function Change_Order(alphabetical){
 
 function Highlight_Links(){
     // goes through the paragraphs and turns them into a clickable links which would then use the 'Goto()' function with he name of the link
-    const Main = document.getElementById("main")
+    const Main = document.getElementById("content-container")
     for (const Paragraph of Main.getElementsByTagName("p")){
         let Name = Paragraph.innerText
 
@@ -123,9 +134,15 @@ function Highlight_Links(){
 
         // go through each word, if the current word appears in the Headers map, then make it a link element
         for (let i = 0; i < words.length; i++){
-            for (const [key, value] of Object.entries(Headers)){
-                if (Headers[key].includes(words[i])){
-                    words[i] = `<a class="Link" onclick="Goto('${words[i]}')">${words[i]}</a>`
+            for (const [key, value] of Object.entries(Headers)) {
+                if (value.includes(words[i])) {
+                    words[i] = `<a class="Link" onclick="Goto('${key}', '${words[i]}')">${words[i]}</a>`;
+                } else {
+                    for (const [transKey, transValues] of Object.entries(HeaderTranslations)) {
+                        if (transValues.includes(words[i])) {
+                            words[i] = `<a class="Link" onclick="Goto('${key}', '${transKey}')">${words[i]}</a>`;
+                        }
+                    }
                 }
             }
         }
@@ -144,5 +161,16 @@ function display_menu(){
     .then(html => {
         document.getElementById('menu-container').innerHTML = html;
         Generate_List()
+    });
+}
+
+function dev_display(file){
+    fetch(file + '.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('content-container').innerHTML = html;
+        Generate_List()
+        Highlight_Links()
+        hljs.highlightAll();
     });
 }
