@@ -1,0 +1,33 @@
+<h1>
+    Lifetime - The Beginning And The End
+</h1>
+<p>
+    GGUI lifetime begins when one of the following is called:
+</p>
+<pre title="How it all begins :3">
+    <code class="language-cpp">
+        GGUI::initGGUI(void);
+    </code>
+    or
+    <code class="language-cpp">
+        GGUI::GGUI(style_base&, uint32 sleepFor = 0);
+        GGUI::GGUI(style_base&&, uint32 sleepFor = 0);
+    </code>
+</pre>
+
+<p>
+    The initGGUI is preferred for more hand on approach, where the user wants to control Everything about the framework. 
+    Although be advised to avoid doing this since few other function calls are recommended to be called before render, which is why GGUI::GGUI is a better choice all around.
+</p>
+<p>
+    On both occasions GGUI sets up its own automated Exit handlers, which will be called in case of critical failure or on user signal.
+</p>
+<p>
+    Even if allocating style_base on heap is not advised, you can still do so with the help of the getAllocationType utility, which checks whether an given pointer is from heap or stack, thus automatically un-allocating all heap allocated style_base on Exit.
+</p>
+
+<pre title="You can also exit on demand with:">
+    <code class="language-cpp">
+        GGUI::EXIT(int exitCode);
+    </code>
+</pre>

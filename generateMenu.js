@@ -1,35 +1,38 @@
 let Headers = { 
-    "concepts": [
-        "color",
-        "utf",
-        "fileStream",
-        "logger",
-        "smallTypes"
+    "Concepts": [
+        "Color",
+        "UTF",
+        "File Stream",
+        "Logger",
+        "Small Types",
+        "Style",
+        "Lifetime",
+        "Borders"
     ]
 }
 
 let HeaderTranslations = {
-    "color": [
+    "Color": [
         "RGB",
         "RGBA"
     ],
-    "utf": [
+    "UTF": [
         "Compact String",
         "Compact_String",
         "Super String",
         "Super_String"
     ],
-    "fileStream": [
+    "File Stream": [
         "CMD",
         "filePosition",
         "bufferCapture"
     ],
-    "logger": [
+    "Logger": [
         "report",
         "reportStack",
         "report Stack"
     ],
-    "smallTypes": [
+    "Small Types": [
         "FVector2",
         "FVector3",
         "IVector2",
@@ -44,6 +47,24 @@ let HeaderTranslations = {
         "Dirty",
         "Guard",
         "Atomic"
+    ],
+    "style": [
+        "Styling",
+        "style base",
+        "style_base"
+    ],
+    "Lifetime": [
+        "Exit",
+        "Crash",
+        "ctrl+c",
+        "Init",
+        "GGUI::GGUI",
+        "initGGUI"
+    ],
+    "Borders": [
+        "enable_border",
+        "enable border",
+        "Space Optimization"
     ]
 }
 
@@ -132,6 +153,9 @@ function Get_By_Class(Parent, Class_Name){
 }
 
 function Goto(theme, Title_Name){
+    // Remove all spaces from the Title_Name
+    Title_Name = Title_Name.replace(/\s+/g, '');
+
     fetch(theme + "/" + Title_Name + '.html')
     .then(response => response.text())
     .then(html => {
