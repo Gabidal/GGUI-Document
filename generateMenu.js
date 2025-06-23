@@ -4,7 +4,7 @@ let Headers = {
         "utf",
         "fileStream",
         "logger",
-        "types"
+        "smallTypes"
     ]
 }
 
@@ -29,7 +29,7 @@ let HeaderTranslations = {
         "reportStack",
         "report Stack"
     ],
-    "types": [
+    "smallTypes": [
         "FVector2",
         "FVector3",
         "IVector2",
