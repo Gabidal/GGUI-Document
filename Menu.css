@@ -218,6 +218,9 @@ h1 {
     color: #f0f0f0;
     text-align: center;
     padding-bottom: 1em;
+    padding-top: 0.5em;
+    position: relative;
+    left: -5vw;
 }
 
 h1::after {

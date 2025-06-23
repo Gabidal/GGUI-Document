@@ -1,0 +1,23 @@
+<h1>
+    UTF - Underlying render unit
+</h1>
+<p>
+    Almost not related to the "Unicode Transformation Format", UTF in GGUI is the basic class which inherits the Compact_String And then adds the foreground and background colors to the mix.
+    The UTF class can take multitude of different types on construct, be it a char, std::string, const char* or even the Compact_String it comprises of.
+    The main idea of UTF class is to add a layer of abstraction between the multitude of different yet similar data "types" that we often use when dealing with low-level languages and especially in applications which have a lot of text in them.
+</p>
+
+<h1>
+    Compact String
+</h1>
+<p>
+    A constexpr-time string "dynamic" container, which works in the c++17 standard. Even if it is limited in some sense compared to some post c++20 constexpr dynamic containers, in this TUI context is more than enough to satisfy our needs.
+</p>
+
+<h1>
+    Super String
+</h1>
+<p>
+    Because of c++17 constexpr limitations and the goal to get as much as optimization possible at compile-time, Super_String class is utilized with predefined array length to host the given amount of <Compact_Strings class=""></Compact_Strings>
+    The whole reason of using Super_String class is because while rendering we don't edit much, we just cumulate more and more into a specific amount of Compact_Strings, not needing to actually add the Strings together, Super_String instead just hold on to the Compact_Strings as individual points in its array and only once liquifies them at the final stage of render right before console buffer write.
+</p>

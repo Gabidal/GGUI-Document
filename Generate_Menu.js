@@ -1,6 +1,7 @@
 let Headers = { 
     "concepts": [
-        "color"
+        "color",
+        "UTF"
     ]
 }
 
@@ -8,6 +9,12 @@ let HeaderTranslations = {
     "color": [
         "RGB",
         "RGBA"
+    ],
+    "UTF": [
+        "Compact String",
+        "Compact_String",
+        "Super String",
+        "Super_String"
     ]
 }
 
@@ -107,9 +114,6 @@ function Goto(theme, Title_Name){
 
 // if the parameter is false, then return the order back to what it was, which is stored in the spare variable: Header_Backup
 function Change_Order(alphabetical){
-    const List = document.getElementById("menu")
-    const Main = document.getElementById("main")
-
     if (alphabetical){
         for (const Header in Headers){
             // needs to be reverse, since the move operation is done reversely
@@ -160,7 +164,7 @@ function display_menu(){
     .then(response => response.text())
     .then(html => {
         document.getElementById('menu-container').innerHTML = html;
-        Generate_List()
+        // Change_Order(true)
     });
 }
 
@@ -169,7 +173,7 @@ function dev_display(file){
     .then(response => response.text())
     .then(html => {
         document.getElementById('content-container').innerHTML = html;
-        Generate_List()
+        Change_Order(true)
         Highlight_Links()
         hljs.highlightAll();
     });
