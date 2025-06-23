@@ -1,81 +1,6 @@
 let Headers = { 
-    "Namespaces": [
-        "Symbols",
-        "Time",
-        "Constants",
-        "Button States",
-        "Color",
-        "UTF Flags",
-        "Memory Flags",
-        "Styles",
-        "Flags",
-        "State",
-        "Settings",
-        "Text Location"
-    ],
-    "Classes": [
-        "Button State",
-        "RGB",
-        "RGBA",
-        "Vector2",
-        "Vector3",
-        "Coordinates",
-        "UTF",
-        "Event",
-        "Input",
-        "Action",
-        "Memory",
-        "Margin",
-        "Value",
-        "Number Value",
-        "RGB Value",
-        "Bool Value",
-        "Coordinates Value",
-        "Margin Value",
-        "Shadow Value",
-        "Stain",
-        "Element",
-        "Text Field",
-        "File Streamer",
-        "Button",
-        "Switch",
-        "Window",
-        "List View",
-        "HTML",
-        "Progress Bar",
-        "Canvas"
-    ],
-    "Syntax": [
-        "Naming Practices"
-    ],
-    "Globals": [
-        "Abstract_Frame_Buffer",
-        "Frame_Buffer",
-        "Pause_Render",
-        "Pause_Event_Thread",
-        "Max_Width",
-        "Max_Height",
-        "Remember",
-        "Event_Handlers",
-        "Inputs",
-        "Element_Names",
-        "Focused_On",
-        "Hovered_On",
-        "Mouse",
-        "Mouse_Movement_Enabled",
-        "KEYBOARD_STATES",
-        "UPDATE_SPEED_MIILISECONDS",
-        "Inputs_Per_Second",
-        "Inputs_Per_Query",
-        "Classes",
-        "Class_Names",
-        "Main",
-        "Outboxed_Elements",
-    ],
-    "Build": [
-        "Windows",
-        "Unix",
-        "Building For Termux"
+    "concepts": [
+        "RGB"
     ]
 }
 
@@ -91,7 +16,6 @@ const Header_Backup = Reverse(structuredClone(Headers))
 
 function Generate_List(){
     const List = document.getElementById("menu")
-    const Main = document.getElementById("main")
 
     for (const [Header, Content] of Object.entries(Headers)){
         const Item = document.createElement("details")
@@ -108,13 +32,13 @@ function Generate_List(){
             Sub_Element.innerText = Sub_Item
             Sub_Element.onclick = () => { 
                 // Automatically scroll to the actual paragraph title.
-                Goto(Sub_Item)
+                Goto(Header, Sub_Item)
 
                 // go through the paragraph titles and set temporarily the background to a lighter tone. 
-                for (const I of List.getElementsByTagName("li")){
-                    I.style.backgroundColor = "rgba(255, 255, 255, 0)"
-                }
-                Sub_Element.style.backgroundColor = "rgba(255, 255, 255, 0.255)"
+                // for (const I of List.getElementsByTagName("li")){
+                //     I.style.backgroundColor = "rgba(255, 255, 255, 0)"
+                // }
+                // Sub_Element.style.backgroundColor = "rgba(255, 255, 255, 0.255)"
             }
             Item.appendChild(Sub_Element)
         }
@@ -160,22 +84,14 @@ function Get_By_Class(Parent, Class_Name){
     return Elements
 }
 
-function Goto(Title_Name){
-    const Main = document.getElementById("main")
-
-    var Element = document.getElementById(Title_Name)
-
-    var All_Tittles = Get_By_Class(Main, "Tittle")
-
-    // Clear the class name "Selected" from the title elements.
-    for (const Tittle of All_Tittles){
-        Tittle.className = "Tittle"
-    }
-
-    // Now set the Selected element the "Selected" class name.
-    Element.className = "Tittle Selected"
-
-    Main.scrollTo({behavior: "smooth", top: Element.offsetTop - 10})
+function Goto(theme, Title_Name){
+    fetch(theme + "/" + Title_Name + '.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('content-container').innerHTML = html;
+        Highlight_Links()
+        hljs.highlightAll();
+    });
 }
 
 // if the parameter is false, then return the order back to what it was, which is stored in the spare variable: Header_Backup
@@ -220,4 +136,13 @@ function Highlight_Links(){
         // set the paragraph innerHTML to the new string
         Paragraph.innerHTML = Name
     }
+}
+
+function display_menu(){
+    fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+        Generate_List()
+    });
 }
