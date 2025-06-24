@@ -1,0 +1,48 @@
+<h1>
+    TextField - Example
+</h1>
+<p>
+    TextField class is a simple container that cannot have any other elements as children, instead it contains the text given by the text style. 
+    You can make the text be left, right or center oriented via the anchor style.
+</p>
+
+<img class="gif-img-floater" src="/examples/img/textFieldExample.png">
+
+<pre>
+    <code class="language-cpp">
+#include "ggui.h"
+
+using namespace GGUI;
+
+int main(){
+    GGUI::GGUI(
+        node(new listView(
+            flow_priority(DIRECTION::ROW) |     // Horizontal list view
+            width(1.0f) | height(1.0f) |    // Fullscreen width and height
+
+            node(new textField(
+                anchor(ANCHOR::LEFT) |          // Anchor the text left
+                width(0.33f) | height(1.0f) | 
+                text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+            )) | 
+
+            node(new textField(
+                anchor(ANCHOR::CENTER) |        // Anchor the text center
+                width(0.33f) | height(1.0f) | 
+                text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+            )) | 
+
+            node(new textField(
+                anchor(ANCHOR::RIGHT) |         // Anchor the text right
+                width(0.33f) | height(1.0f) | 
+                text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+            ))
+        ))
+    );
+
+    while (true){
+        // ...
+    }
+}
+    </code>
+</pre>

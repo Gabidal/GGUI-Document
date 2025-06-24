@@ -1,0 +1,31 @@
+<h1>
+    Sprite - Animated UTF
+</h1>
+<p>
+    Sprite is a simple container of UTF objects one for each frame which are displayed with the given speed and offset modifier on construct.
+    Sprite object keeps track of its internal UTF count, exceeding single UTF in the Sprite container will trigger the MultiFrame flag, making GGUI update on each frame defined by the value of MultiFrameCanvas constant, which defines how many milliseconds GGUI will have to wait until the next frame of Sprite is drawn.
+    On each draw call the Canvas own Animation Frame counter is incremented looping back when going over 255, since it is a u8bit container.
+</p>
+<pre>
+    <code class="language-cpp">
+sprite(UTF(...));   // See the UTF docs
+
+// This sprite is multiframed and will oscillate between the two texts and interpolate the colors
+sprite({
+    UTF('a', { COLOR::RED, COLOR::BLUE }),
+    UTF('b', { COLOR::WHITE, COLOR::BLACK})
+});
+
+sprite(
+    {
+        UTF(...),
+        UTF(...)
+    },
+    123,    // Offset added to the parent canvas internal u8bit
+    2       // Speed multiplier, 2 means 2x speed of interpolation speed 
+)
+    </code>
+</pre>
+<p>
+    It is recommended that the Sprites and their corresponding UTFs are predefined in and then asserted to the canvas.
+</p>

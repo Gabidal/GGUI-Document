@@ -2,12 +2,20 @@ body{
     display: flex;
     width: 100%;
     height: 100%;
-    background-color: rgb(31, 31, 31);
-    color: rgb(177, 177, 177);
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background-color: #0f172a;
+    color: #cbd5e1;
+    font-family: 'system-ui';
     font-size: 1.05em;
     letter-spacing: 0.01em;
     overflow: hidden;
+    margin: 0;
+}
+
+.gif-img-floater {
+    position: fixed; 
+    right: 1vw; 
+    max-width: 25%;
+    animation: breathe 5s ease-in-out infinite;
 }
 
 .float-img-left {
@@ -25,44 +33,33 @@ body{
 }
 
 .Logo{
-    max-width: 70%;
+    max-width: 100%;
     max-height: auto;
-    margin: 0 1em 1em 0;
-}
-
-.GGUI{
-    
-    padding: 0.5em 0.5em;
-}
-
-.Main{
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    padding-right: 15px;
 }
 
 .Static1{
-    border-right: 1px solid rgb(53, 53, 53);
-    margin-right: 1em;
-    overflow: hidden;
+    border-right: 1px solid #364057;
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 15%;
     height: 100%;
+    background-color: #10182c;
+}
+
+/* Hide scrollbar for Static1 (menu container) */
+.Static1::-webkit-scrollbar {
+    display: none;
+}
+
+.Static1 {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .Static2{
     overflow-y: auto;
     width: 100%;
     height: 100%;
-}
-
-.OrderList{
-    padding: 0.5em;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    justify-content: flex-start;
-    align-items: flex-start;
 }
 
 .USE {
@@ -75,27 +72,26 @@ ul{
 }
 
 li{
-    padding: 0.5em;
+    padding: 0.25em;
     list-style-type: none;
-    border-radius: 0.2em;
     transition: background 0.2s, color 0.2s;
 }
 
 li:hover{
-    background: #23272f;
-    color: #fff;
+    background: #364057;
+    color: #e0e0e0;
 }
 
 .Link{
     display: inline;
     text-decoration: underline;
     transition-duration: 0.4s;
-    color: #4a90e2;
+    color: #5b6c94;
     font-weight: 500;
 }
 
 .Link:hover{
-    color: #357ab8;
+    color: #4c99dd;
     text-decoration: underline;
 }
 
@@ -107,61 +103,12 @@ li:hover{
     border-color:rgba(172, 0, 57, 0.63);
 }
 
-h3{
-    padding-top: 5em;
-    font-family: 'Segoe UI', monospace;
-    font-size: 2em;
-    font-weight: 600;
-    width: 90%;
-    border-bottom: 2px solid #e1e2e6;
-    color: #222;
-}
-
-button{
-    background: linear-gradient(135deg, #f5f6fa 60%, #e1e2e6 100%);
-    border: 1.5px solid #d1d1d1;
-    color: #222;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1em;
-    margin: 0.5em 0.5em;
-    cursor: pointer;
-    border-radius: 0.4em;
-    padding: 0.7em 1.2em;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07), 0 1.5px 3px rgba(0,0,0,0.03);
-    transition: background 0.25s, color 0.25s, box-shadow 0.25s, border 0.25s;
-    width: auto;
-    min-width: 120px;
-    height: auto;
-    font-weight: 500;
-    outline: none;
-}
-
-button:hover, button:focus{
-    background: linear-gradient(135deg, #e9ecef 60%, #f5f6fa 100%);
-    color: #1a1a1a;
-    border: 1.5px solid #bdbdbd;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.Selected{
-    animation-duration: 1.2s;
-    animation-name: flash;
-    animation-iteration-count: 1;
-    transition: box-shadow 0.3s, border 0.3s;
-    border: 2px solid #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
-}
-
-@keyframes flash {
-    0% {
-        background-color: #e3f0ff;
+@keyframes breathe {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(37, 37, 37, 0.377);
     }
     50% {
-        background-color: #f5f6fa;
-    }
-    100% {
-        background-color: #e3f0ff00;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.473), 0 0 40px rgba(0, 0, 0, 0.281);
     }
 }
 
@@ -172,7 +119,7 @@ button:hover, button:focus{
 }
 
 #menu > details > li {
-    border-left: 1px solid #444;
+    border-left: 1px solid #364057;
     padding-left: 1em;
 }
 
@@ -185,13 +132,9 @@ button:hover, button:focus{
 #menu details > summary::marker {
     display: none;
 }
-#menu details > summary {
-    position: relative;
-    cursor: pointer;
-    padding-right: 1.5em;
-}
 
 p {
+    color: #c5d4e2;
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -211,11 +154,15 @@ pre {
     text-align: left;
 }
 
+.language-cpp {
+    border-color: #00000000;
+}
+
 h1 {
     font-family: 'system-ui';
     font-size: 2.5em;
     font-weight: 500;
-    color: #f0f0f0;
+    color: #dae2eb;
     text-align: center;
     padding-bottom: 1em;
     padding-top: 0.5em;
@@ -228,7 +175,7 @@ h1::after {
     display: block;
     margin: 0.5em auto 0 auto;
     width: 60%;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #364057;
 }
 
 h2 {
@@ -248,25 +195,62 @@ h2::after {
     display: block;
     margin: 0.5em auto 0 auto;
     width: 30%;
-    border-bottom: 1px solid #2b2b2b;
+    border-bottom: 1px solid #364057;
 }
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
     width: 10px;
-    background: #23232a;
+    background: #364057;
 }
 ::-webkit-scrollbar-thumb {
-    background: #44485a;
+    background: #364057;
     border-radius: 8px;
-    border: 2px solid #23232a;
+    border: 2px solid #364057;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #5a5e7a;
+    background: #364057;
 }
 
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #44485a #23232a;
+    scrollbar-color: #364057 #364057;
+}
+
+/* Scroll indicator underglow effects */
+.scroll-indicator {
+    position: relative;
+}
+
+.scroll-indicator::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    height: 20px;
+    background: linear-gradient(to top, rgba(238, 246, 255, 0.315), transparent);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 10;
+}
+
+.scroll-indicator.has-scroll::after {
+    opacity: 1;
+}
+
+/* Specific styling for Static1 (menu) scroll indicator */
+.Static1 ul.scroll-indicator::after {
+    left: 0;
+    width: 13%;
+    background: linear-gradient(to top, rgba(66, 128, 194, 0.2), transparent);
+    height: 2vh;
+}
+
+/* Specific styling for Static2 (content) scroll indicator */
+.Static2.scroll-indicator::after {
+    left: 13%;
+    right: 0;
+    background: linear-gradient(to top, rgba(66, 128, 194, 0.2), transparent);
+    height: 3.5vh;
 }

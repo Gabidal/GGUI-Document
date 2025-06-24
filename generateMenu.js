@@ -7,14 +7,30 @@ let Headers = {
         "Small Types",
         "Style",
         "Lifetime",
-        "Borders"
+        "Borders",
+        "Sprite"
+    ],
+    "Examples": [
+        "Button Example",
+        "Canvas Example",
+        "ListView Example",
+        "Opacity Example",
+        "ProgressBar Example",
+        "ScrollView Example",
+        "SwitchBox Example",
+        "TextField Example"
+    ],
+    "Versions": [
+        "0.1.8"
     ]
 }
 
 let HeaderTranslations = {
     "Color": [
         "RGB",
-        "RGBA"
+        "RGBA",
+        "opacity",
+        "transparency"
     ],
     "UTF": [
         "Compact String",
@@ -49,6 +65,7 @@ let HeaderTranslations = {
         "Atomic"
     ],
     "style": [
+        "style",
         "Styling",
         "style base",
         "style_base"
@@ -65,6 +82,14 @@ let HeaderTranslations = {
         "enable_border",
         "enable border",
         "Space Optimization"
+    ],
+    "Sprite": [
+        "Multi Frame",
+        "Animated"
+    ],
+    "0.1.8": [
+        "The Styling update",
+        "Styling update"
     ]
 }
 
@@ -187,7 +212,7 @@ function Highlight_Links(){
         let Name = Paragraph.innerText
 
         // concatenate the string into words:
-        let words = Name.split(/(\s|[.,!?(){}[\]])+/)
+        let words = Name.split(/((?<!\d)\.(?!\d)|[\s,!?(){}\[\]])/)
 
         // go through each word, if the current word appears in the Headers map, then make it a link element
         for (let i = 0; i < words.length; i++){
@@ -219,6 +244,8 @@ function display_menu(){
         document.getElementById('menu-container').innerHTML = html;
         // Change_Order(true)
         Generate_List()
+        // Initialize scroll indicators after menu is loaded
+        setTimeout(initScrollIndicators, 100);
     });
 }
 
@@ -230,5 +257,111 @@ function dev_display(file){
         Generate_List()
         Highlight_Links()
         hljs.highlightAll();
+        // Initialize scroll indicators after content is loaded
+        setTimeout(initScrollIndicators, 100);
     });
 }
+
+// Function to check if an element has scrollable content and update indicators
+function updateScrollIndicator(element) {
+    if (!element) return;
+    
+    const hasScroll = element.scrollHeight > element.clientHeight;
+    const isAtBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 5; // 5px tolerance
+    
+    // For menu container, apply classes to the ul element
+    if (element.id === 'menu-container') {
+        const menuUl = document.getElementById('menu');
+        if (menuUl) {
+            if (hasScroll && !isAtBottom) {
+                menuUl.classList.add('scroll-indicator', 'has-scroll');
+            } else {
+                menuUl.classList.remove('has-scroll');
+                if (!hasScroll) {
+                    menuUl.classList.remove('scroll-indicator');
+                }
+            }
+        }
+    } else {
+        // For other elements, apply classes directly
+        if (hasScroll && !isAtBottom) {
+            element.classList.add('scroll-indicator', 'has-scroll');
+        } else {
+            element.classList.remove('has-scroll');
+            if (!hasScroll) {
+                element.classList.remove('scroll-indicator');
+            }
+        }
+    }
+}
+
+// Initialize scroll indicators for all scrollable containers
+function initScrollIndicators() {
+    const menuContainer = document.getElementById('menu-container');
+    const contentContainer = document.getElementById('content-container');
+    const menuUl = document.getElementById('menu');
+    
+    // Add scroll-indicator class to menu ul element instead of container
+    if (menuUl) {
+        menuUl.classList.add('scroll-indicator');
+        updateScrollIndicator(menuContainer); // Still check scroll on container
+        
+        // Listen for scroll events on the container
+        menuContainer.addEventListener('scroll', () => {
+            updateScrollIndicator(menuContainer);
+        });
+        
+        // Listen for content changes (using MutationObserver)
+        const menuObserver = new MutationObserver(() => {
+            setTimeout(() => updateScrollIndicator(menuContainer), 50);
+        });
+        menuObserver.observe(menuContainer, { childList: true, subtree: true });
+    }
+    
+    if (contentContainer) {
+        contentContainer.classList.add('scroll-indicator');
+        updateScrollIndicator(contentContainer);
+        
+        // Listen for scroll events
+        menuContainer.addEventListener('scroll', () => {
+            updateScrollIndicator(menuContainer);
+        });
+        
+        // Listen for content changes (using MutationObserver)
+        const menuObserver = new MutationObserver(() => {
+            setTimeout(() => updateScrollIndicator(menuContainer), 50);
+        });
+        menuObserver.observe(menuContainer, { childList: true, subtree: true });
+    }
+    
+    if (contentContainer) {
+        contentContainer.classList.add('scroll-indicator');
+        updateScrollIndicator(contentContainer);
+        
+        // Listen for scroll events
+        contentContainer.addEventListener('scroll', () => {
+            updateScrollIndicator(contentContainer);
+        });
+        
+        // Listen for content changes
+        const contentObserver = new MutationObserver(() => {
+            setTimeout(() => updateScrollIndicator(contentContainer), 50);
+        });
+        contentObserver.observe(contentContainer, { childList: true, subtree: true });
+    }
+    
+    // Also check on window resize
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            updateScrollIndicator(menuContainer);
+            updateScrollIndicator(contentContainer);
+        }, 100);
+    });
+}
+
+// Initialize scroll indicators when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initScrollIndicators, 200);
+});
+
+
