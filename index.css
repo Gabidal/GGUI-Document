@@ -144,6 +144,19 @@ p {
     text-align: left;
 }
 
+.Static2 ul li {
+    color: #c5d4e2;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    box-sizing: border-box;
+    text-align: left;
+    
+    list-style-type:decimal;
+}
+
 pre {
     max-width: 90%;
     margin-left: auto;
@@ -155,7 +168,12 @@ pre {
 }
 
 .language-cpp {
-    border-color: #00000000;
+    border-top: #00000000;
+    border-bottom: #00000000;
+    border-left: #00000000;
+    border-color: #364057;
+    border-radius: 0;
+    border-width: 0.2vw;
 }
 
 h1 {

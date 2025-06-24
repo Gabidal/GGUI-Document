@@ -1,13 +1,17 @@
-let Headers = { 
+let Headers = {
+    "Styling": [
+        "Styling",
+        "Position",
+        "Dimensions",
+        "Borders"
+    ],
     "Concepts": [
         "Color",
         "UTF",
         "File Stream",
         "Logger",
         "Small Types",
-        "Style",
         "Lifetime",
-        "Borders",
         "Sprite"
     ],
     "Examples": [
@@ -90,6 +94,17 @@ let HeaderTranslations = {
     "0.1.8": [
         "The Styling update",
         "Styling update"
+    ],
+    "Position": [
+        "x", "X",
+        "y", "Y",
+        "z", "Z"
+    ],
+    "Dimensions": [
+        "width",
+        "height",
+        "dimensions",
+        "dimension"
     ]
 }
 
@@ -126,12 +141,6 @@ function Generate_List(){
             Sub_Element.onclick = () => { 
                 // Automatically scroll to the actual paragraph title.
                 Goto(Header, Sub_Item)
-
-                // go through the paragraph titles and set temporarily the background to a lighter tone. 
-                // for (const I of List.getElementsByTagName("li")){
-                //     I.style.backgroundColor = "rgba(255, 255, 255, 0)"
-                // }
-                // Sub_Element.style.backgroundColor = "rgba(255, 255, 255, 0.255)"
             }
             Item.appendChild(Sub_Element)
         }
@@ -177,6 +186,17 @@ function Get_By_Class(Parent, Class_Name){
     return Elements
 }
 
+function codify(){
+    document.querySelectorAll('code').forEach(codeElement => {
+        if (!codeElement.parentElement.matches('pre')) {
+            const preElement = document.createElement('pre');
+            preElement.appendChild(codeElement.cloneNode(true));
+            codeElement.replaceWith(preElement);
+        }
+        codeElement.classList.add('language-cpp');
+    });
+}
+
 function Goto(theme, Title_Name){
     // Remove all spaces from the Title_Name
     Title_Name = Title_Name.replace(/\s+/g, '');
@@ -186,6 +206,7 @@ function Goto(theme, Title_Name){
     .then(html => {
         document.getElementById('content-container').innerHTML = html;
         Highlight_Links()
+        codify();
         hljs.highlightAll();
     });
 }
@@ -256,9 +277,10 @@ function dev_display(file){
         document.getElementById('content-container').innerHTML = html;
         Generate_List()
         Highlight_Links()
-        hljs.highlightAll();
         // Initialize scroll indicators after content is loaded
         setTimeout(initScrollIndicators, 100);
+        codify();
+        hljs.highlightAll();
     });
 }
 

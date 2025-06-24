@@ -1,5 +1,5 @@
 <h1>
-    Style - CSS Styling In HTML Form
+    Styling - CSS Styling In HTML Form
 </h1>
 <p>
     Style GGUI was introduced in 0.1.8 update with the dynamic styling system, where on user can add different types of styles while also structuring their whole application similar how it would be displayed.
@@ -7,11 +7,11 @@
 </p>
 
 <pre title="Basic use of style class">
-    <code class="language-cpp">
+    <code>
 // Here we have two style_base inheritants which are added together, returning a new style_base* which can be added further or given to an renderable element object.
 textColor(COLOR::RED) | backgroundColor(COLOR::BLUE)
     </code>
-</pre>
+</code>
 
 <p style="color: red;">
     Note: As of 0.1.8 you should not make global styles, instead make local, since each style_base will point to the next style_base*, and on processing one the next pointer is cleared out.
@@ -21,7 +21,7 @@ textColor(COLOR::RED) | backgroundColor(COLOR::BLUE)
     The styling structure allows you to also add elements into the styling itself via the node class, enabling tree like structure at construction phase just like in HTML or XML.
 </p>
 <pre title="Basic HTML tree in GGUI style node tree">
-    <code class="language-cpp">
+    <code>
 element* someUpperElement = new element(
     node(new element(   // This element will now be a child element under the parenting element declared above
         node(new element(
@@ -43,7 +43,7 @@ element* someUpperElement = new element(
     })
 )
     </code>
-</pre>
+</code>
 
 <p style="color: red;">
     Note: With the use of '|' operator appending styles comes a caveat. 
