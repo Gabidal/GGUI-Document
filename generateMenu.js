@@ -236,7 +236,7 @@ function Highlight_Links() {
         let Name = Paragraph.innerText;
 
         // Split the text into words, filtering out empty strings and irrelevant characters
-        let words = Name.split(/\b/).filter(word => word.trim() !== "" && !/^[\s,!?(){}\[\].]+$/.test(word));
+        let words = Name.split(/((?<!\d)\.(?!\d)|[\s,!?(){}\[\]])/);
 
         // Iterate through each word and check for matches in Headers and HeaderTranslations
         for (let i = 0; i < words.length; i++) {
@@ -269,7 +269,7 @@ function Highlight_Links() {
         }
 
         // Reconstruct the paragraph with the updated words
-        Paragraph.innerHTML = words.join(" ");
+        Paragraph.innerHTML = words.join("");
     }
 }
 
