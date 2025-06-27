@@ -266,7 +266,7 @@ function display_menu(){
         // Change_Order(true)
         Generate_List()
         // Initialize scroll indicators after menu is loaded
-        setTimeout(initScrollIndicators, 100);
+        initScrollIndicators();
     });
 }
 
@@ -278,7 +278,7 @@ function dev_display(file){
         Generate_List()
         Highlight_Links()
         // Initialize scroll indicators after content is loaded
-        setTimeout(initScrollIndicators, 100);
+        initScrollIndicators();
         codify();
         hljs.highlightAll();
     });
@@ -383,7 +383,9 @@ function initScrollIndicators() {
 
 // Initialize scroll indicators when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initScrollIndicators, 200);
+    initScrollIndicators();
 });
 
-
+function init(){
+    hljs.configure({languages:["cpp"]});
+}

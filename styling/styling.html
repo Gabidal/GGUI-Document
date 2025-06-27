@@ -6,11 +6,9 @@
     in STYLING_INTERNAL::* namespace resides the style_base class, which contains the necessaries for the addition for OOP styled style objects which are passed at construction time passed either with && or & reference.
 </p>
 
-<pre title="Basic use of style class">
-    <code>
+<code title="Basic use of style class">
 // Here we have two style_base inheritants which are added together, returning a new style_base* which can be added further or given to an renderable element object.
 textColor(COLOR::RED) | backgroundColor(COLOR::BLUE)
-    </code>
 </code>
 
 <p style="color: red;">
@@ -20,8 +18,8 @@ textColor(COLOR::RED) | backgroundColor(COLOR::BLUE)
 <p>
     The styling structure allows you to also add elements into the styling itself via the node class, enabling tree like structure at construction phase just like in HTML or XML.
 </p>
-<pre title="Basic HTML tree in GGUI style node tree">
-    <code>
+
+<code title="Basic HTML tree in GGUI style node tree">
 element* someUpperElement = new element(
     node(new element(   // This element will now be a child element under the parenting element declared above
         node(new element(
@@ -42,7 +40,6 @@ element* someUpperElement = new element(
         )
     })
 )
-    </code>
 </code>
 
 <p style="color: red;">
