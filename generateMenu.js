@@ -68,9 +68,8 @@ let HeaderTranslations = {
         "Guard",
         "Atomic"
     ],
-    "style": [
+    "Styling": [
         "style",
-        "Styling",
         "style base",
         "style_base"
     ],
@@ -201,7 +200,11 @@ function Goto(theme, Title_Name){
     // Remove all spaces from the Title_Name
     Title_Name = Title_Name.replace(/\s+/g, '');
 
-    fetch(theme + "/" + Title_Name + '.html')
+    resourceName = theme + "/" + Title_Name + '.html'
+    
+    history.pushState({ resource: resourceName }, "", `#${resourceName}`);
+
+    fetch(resourceName)
     .then(response => response.text())
     .then(html => {
         document.getElementById('content-container').innerHTML = html;
@@ -226,35 +229,47 @@ function Change_Order(alphabetical){
     Generate_List()
 }
 
-function Highlight_Links(){
-    // goes through the paragraphs and turns them into a clickable links which would then use the 'Goto()' function with he name of the link
-    const Main = document.getElementById("content-container")
-    for (const Paragraph of Main.getElementsByTagName("p")){
-        let Name = Paragraph.innerText
+function Highlight_Links() {
+    // Goes through the paragraphs and turns them into clickable links using the 'Goto()' function
+    const Main = document.getElementById("content-container");
+    for (const Paragraph of Main.getElementsByTagName("p")) {
+        let Name = Paragraph.innerText;
 
-        // concatenate the string into words:
-        let words = Name.split(/((?<!\d)\.(?!\d)|[\s,!?(){}\[\]])/)
+        // Split the text into words, filtering out empty strings and irrelevant characters
+        let words = Name.split(/\b/).filter(word => word.trim() !== "" && !/^[\s,!?(){}\[\].]+$/.test(word));
 
-        // go through each word, if the current word appears in the Headers map, then make it a link element
-        for (let i = 0; i < words.length; i++){
-            for (const [key, value] of Object.entries(Headers)) {
-                if (value.includes(words[i])) {
-                    words[i] = `<a class="Link" onclick="Goto('${key}', '${words[i]}')">${words[i]}</a>`;
-                } else {
-                    for (const [transKey, transValues] of Object.entries(HeaderTranslations)) {
-                        if (transValues.includes(words[i])) {
-                            words[i] = `<a class="Link" onclick="Goto('${key}', '${transKey}')">${words[i]}</a>`;
-                        }
+        // Iterate through each word and check for matches in Headers and HeaderTranslations
+        for (let i = 0; i < words.length; i++) {
+            let matched = false;
+
+            for (const [theme, keywords] of Object.entries(Headers)) {
+                if (matched) break;
+
+                // Check if the word matches a keyword directly
+                if (keywords.some(keyword => {
+                    if (keyword.toLowerCase() === words[i].toLowerCase()) {
+                        words[i] = `<a class="Link" onclick="Goto('${theme}', '${keyword}')">${words[i]}</a>`;
+                        matched = true;
+                        return true;
+                    }
+                    return false;
+                })) {
+                    break;
+                }
+
+                // Check if the word matches a translated keyword
+                for (const keyword of keywords) {
+                    if (HeaderTranslations[keyword]?.some(translated => translated.toLowerCase() === words[i].toLowerCase())) {
+                        words[i] = `<a class="Link" onclick="Goto('${theme}', '${keyword}')">${words[i]}</a>`;
+                        matched = true;
+                        break;
                     }
                 }
             }
         }
 
-        // transform the list back into a string
-        Name = words.join("")
-
-        // set the paragraph innerHTML to the new string
-        Paragraph.innerHTML = Name
+        // Reconstruct the paragraph with the updated words
+        Paragraph.innerHTML = words.join(" ");
     }
 }
 
@@ -388,4 +403,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init(){
     hljs.configure({languages:["cpp"]});
+
+    // Handle back/forward navigation
+    window.addEventListener("popstate", (event) => {
+        let resource;
+
+        // Check if the state has a resource, otherwise extract it from the URL hash
+        if (event.state && event.state.resource) {
+            resource = event.state.resource;
+        } else {
+            const hash = window.location.hash;
+            resource = hash ? hash.substring(1) : "default"; // Remove the '#' and default to "default"
+        }
+
+        // Load the resource
+        dev_display(resource.replace('.html', ''));
+    });
 }
