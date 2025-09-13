@@ -12,7 +12,8 @@ let Headers = {
         "Logger",
         "Small Types",
         "Lifetime",
-        "Sprite"
+        "Sprite",
+        "Arguments"
     ],
     "Examples": [
         "Button Example",

@@ -1,0 +1,58 @@
+<h1>
+    Arguments - CLI parameters for GGUI
+</h1>
+
+<p>
+    GGUI provides configurable parameters on call-time. The following supported arguments are:
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Argument</th>
+            <th>Default value</th>
+            <th class="vertical-grow">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>integer</td>
+            <td>mousePressCooldown</td>
+            <td>365</td>
+            <td>The cooldown time (in milliseconds) for mouse left/right click held down to trigger for dragging or anything else.</td>
+        </tr>
+        <tr>
+            <td>flag</td>
+            <td>enableWordWrapping</td>
+            <td>true</td>
+            <td>Enable word wrapping for text rendering in terminals where on row exceed wont automatically make a newline.</td>
+        </tr>
+        <tr>
+            <td>flag</td>
+            <td>enableGammaCorrection</td>
+            <td>false</td>
+            <td>Enable gamma correction for colors, making them appear more vibrant.</td>
+        </tr>
+        <tr>
+            <td>string</td>
+            <td>loggerFileName</td>
+            <td>ggui.log</td>
+            <td>The file name for the logger output file. Default is "GGUI.log"</td>
+        </tr>
+        <tr>
+            <td>flag</td>
+            <td>enableDRM</td>
+            <td>false</td>
+            <td>Disables TTY ansi output, for DRM based pixel rendering via the GGDirect backend.</td>
+        </tr>        
+        <tr>
+            <td>flag</td>
+            <td>help/h</td>
+            <td>NaN</td>
+            <td>Displays the help message with all arguments and their description.</td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    GGUI removes hyphens from the arguments, so calling --help is same as -help or help
+</p>

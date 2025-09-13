@@ -272,3 +272,39 @@ h2::after {
     background: linear-gradient(to top, rgba(66, 128, 194, 0.2), transparent);
     height: 3.5vh;
 }
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 6.5em;
+    color: #cbd5e1;
+    font-size: 1em;
+}
+
+table th, table td {
+    border-left: 1px solid #364057;
+    padding: 1em;
+    text-align: left;
+    transition: background 0.2s, color 0.2s;
+}
+
+table th {
+    background: #1e293b;
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+table th:first-child,
+table td:first-child {
+    border-left: none;
+}
+
+/* Vertical growth column class for descriptions and longer text */
+.vertical-grow {
+    max-width: 20em;
+    width: 20em;
+    word-wrap: break-word;
+    white-space: normal;
+    vertical-align: top;
+    line-height: 1.4;
+}
