@@ -1,4 +1,7 @@
 let Headers = {
+    "Tutorials": [
+        "Getting Started"
+    ],
     "Styling": [
         "Styling",
         "Position",
@@ -105,6 +108,9 @@ let HeaderTranslations = {
         "height",
         "dimensions",
         "dimension"
+    ],
+    "Example": [
+        "examples"
     ]
 }
 
@@ -234,6 +240,11 @@ function Highlight_Links() {
     // Goes through the paragraphs and turns them into clickable links using the 'Goto()' function
     const Main = document.getElementById("content-container");
     for (const Paragraph of Main.getElementsByTagName("p")) {
+        // Skip paragraphs that contain elements with the 'preserve-href' class
+        if (Paragraph.querySelector('.preserve-href')) {
+            continue;
+        }
+
         let Name = Paragraph.innerText;
 
         // Split the text into words, filtering out empty strings and irrelevant characters

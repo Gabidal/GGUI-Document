@@ -1,0 +1,126 @@
+<h1>
+    GGUI 0.1.8 Update
+</h1>
+
+<code>
+  /$$$$$$   /$$$$$$  /$$   /$$ /$$$$$$
+ /$$__  $$ /$$__  $$| $$  | $$|_  $$_/
+| $$  \__/| $$  \__/| $$  | $$  | $$  
+| $$ /$$$$| $$ /$$$$| $$  | $$  | $$  
+| $$|_  $$| $$|_  $$| $$  | $$  | $$  
+| $$  \ $$| $$  \ $$| $$  | $$  | $$  
+|  $$$$$$/|  $$$$$$/|  $$$$$$/ /$$$$$$
+ \______/  \______/  \______/ |______/
+  /$$$$$$       /$$        /$$$$$$    
+ /$$$_  $$    /$$$$       /$$__  $$   
+| $$$$\ $$   |_  $$      | $$  \ $$   
+| $$ $$ $$     | $$      |  $$$$$$/   
+| $$\ $$$$     | $$       >$$__  $$   
+| $$ \ $$$     | $$      | $$  \ $$   
+|  $$$$$$ /$$ /$$$$$$ /$$|  $$$$$$/   
+ \______/|__/|______/|__/ \______/
+</code>
+
+<h2>Overview</h2>
+<p>
+    Major restructuring and modernization of the project. Heaps of optimization and custom containers made for highly optimal results.
+    Whole new styling system for more HTML / XML like styling and node tree construction. Internal components are clipped off from auto generated
+    header exports. Since this update nearly re-wrote the whole project, many commits that look like fixes are about issues brought by the re-write.
+</p>
+
+<h2>API Changes</h2>
+<ul>
+    <li>Input events now use IVector2 instead of Coordinate struct.</li>
+    <li>Many (if not all) classes are now written in lower camelCase.</li>
+    <li>Vector2 is now correctly named FVector2 for containing floating point coordinates.</li>
+    <li>GGUI::mouse is now an IVector2 type.</li>
+    <li>You can now give percentage floating point values for almost any value-based styling (width, color channel, etc.). Example:</li>
+    <code>
+element(
+    width(100) | height(100) |   // set the parent element as 100x100
+    node(new element(
+        width(0.50f) | height(0.50f)    // this child element is now 50x50 and updates as its parents dimensions change
+    ))
+)
+    </code>
+    <li>GGUI no longer has RGBA; opacity is provided as a single floating value per element node.</li>
+    <li>RGB lerp can use Gamma color correct compute (higher cost) or a cheap simple lerp formula.</li>
+    <li>Configure gamma correction via setting or command line argument: enableGammaCorrection</li>
+    <li>GGUI accepts many configurable settings at call time via the args. Hyphens are removed so you can add single hyphen, double hyphen or no hyphens.</li>
+    <li>Node structure follows an HTML / XML like style. GGUI provides on_init() and other on_* state change handlers the user can customize.</li>
+    <li>Because JS and similar ecosystems use underscores for their handlers, GGUI uses the same naming convention: on_*.</li>
+    <li>GGUI::Main is not accessible anymore; it was moved under GGUI::INTERNAL::Main and is intended to be accessed through GGUI::getRoot().</li>
+    <li>Titles are now native to the element class; the window class was removed.</li>
+    <li>Pixel-based canvas removed (only terminal cell based canvas retained). For pixel perfect canvas look up GGDirect (GGUI with DRM backend support).</li>
+    <li>Button class removed; a normal textField with on_click() offers the same behavior.</li>
+    <li>SwitchBoxes now have singleSelect(true) styling which disables other marked SwitchBoxes in the same parent for simple single-choice lists.</li>
+    <li>Shadow styling removed (will be replaced later with full shader-like customizations).</li>
+</ul>
+
+<h2>Fixes</h2>
+<ul>
+    <li>Fixed transparency not propagating properly to transparent layers of text (was not obtaining color from layers below).</li>
+</ul>
+
+<h2>Optimizations</h2>
+<ul>
+    <li>Introduced custom string utilities to prevent unnecessary concatenations:</li>
+    <ul>
+        <li>compactString: Holds a std::variant of either a char or a Unicode letter.</li>
+        <li>superString: Holds a predetermined list of compactStrings, capable of concatenating smaller superStrings.</li>
+        <li>The entire rendering pipeline is based on these two classes.</li>
+    </ul>
+    <li>Many deeply nested getters made constexpr to improve inlining and runtime.</li>
+    <li>Implemented custom fastVector to replace certain std::vector usages for more cache-friendly behavior between render passes.</li>
+</ul>
+
+<h2>For Maintainers</h2>
+<ul>
+    <li>Added proper scripts (Linux &amp; Windows) for init, build, export, test and benchmarking with various tools.</li>
+    <li>GGUI now accepts -DGGUI_DEBUG, -DGGUI_RELEASE or -DGGUI_PROFILE (managed via Meson, can be set manually).</li>
+    <li>Enabling -DGGUI_DEBUG makes GGUI behave like --verbose in other programs.</li>
+</ul>
+
+<h2>Internal</h2>
+<ul>
+    <li>Added new multithread safety guard wrapper for memory events.</li>
+    <li>Distributed to multithreading:</li>
+    <ul>
+        <li>Rendering pipeline</li>
+        <li>Memory and timed events handling</li>
+        <li>User input handling</li>
+    </ul>
+    <li>Introduced internally used reportStacktrace() utilizing symbol table lookup and stack to print helpful stacktraces.</li>
+    <li>Utilizes constexpr operators to default many stylings; currently only works on GCC v13+ (not Clang).</li>
+    <li>The GGUI library now links statically with libc and libc++.</li>
+</ul>
+
+<h2>Small Additional Notes</h2>
+<ul>
+    <li>GitHub Actions CI workflows.</li>
+    <li>New analytics &amp; benchmarking scripts:</li>
+    <code>
+./bin/test.sh
+./bin/analytics/benchmark.sh
+./bin/analytics/time.sh 5 10   # runs for 5 seconds and 10 seconds and displays growth in opcode count
+    </code>
+    <li>Examples organized into structured sub folders:</li>
+    <ul>
+        <li>small &mdash; single feature focused examples</li>
+        <li>medium &mdash; feature combinatorial examples</li>
+        <li>large &mdash; applicative examples</li>
+    </ul>
+    <li>Developer and contribution tooling (.github, guidelines).</li>
+    <li>Percentage-based positioning accounts for parent.width/height minus the node's own size.</li>
+</ul>
+<p>Example positioning with percentages:</p>
+<code>
+element(
+    width(100) | height(100) |
+
+    node(new element(
+        width(10) | height(10) |
+        position(STYLES::bottom + STYLES::left) // Forces element to bottom-left, offset by its 10x10 so it stays in-bounds.
+    ))
+)
+</code>

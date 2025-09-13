@@ -1,0 +1,80 @@
+<h1>
+    Getting Started
+</h1>
+<ul>
+    <li>Get the latest GGUI library and header at: <a href="https://github.com/Gabidal/GGUI/releases/latest" target="_blank" class="preserve-href">GitHub</a>.</li>
+    <li>Create your simple Hello World cpp file:</li>
+    <code>
+#include &lt;GGUI.h&gt;
+
+using namespace GGUI;
+
+int main() 
+{
+    GGUI::GGUI(
+        title("Welcome to GGUI!") | 
+        node(new textField( 
+            position(STYLES::center) | 
+            text("Hello World!")
+        ))
+    );
+
+    while (true) {} // Keep the app running until ctr+c
+}
+    </code>
+
+    <li>Link our small app with GGUI:</li>
+    <code>
+g++ main.cpp -o main -I/path/to/GGUI -L/path/to/GGUI -lGGUI
+    </code>
+
+    <li>Optionally add GGUI to meson.build
+        <ul>
+            <li>Add the following lines to your meson.build file:</li>
+            <code>
+project('my_ggui_app', 'cpp')
+
+# Try to find GGUI as a system dependency first
+ggui_dep = dependency('GGUI', required: false)
+
+# If not found as system dependency, you might need to use find_library
+if not ggui_dep.found()
+  ggui_lib = find_library('GGUI', dirs: ['/path/to/GGUI'])
+  ggui_inc = include_directories('/path/to/GGUI')
+  ggui_dep = declare_dependency(dependencies: ggui_lib, include_directories: ggui_inc)
+endif
+
+# Create the executable and link with GGUI
+executable('main', 'main.cpp', dependencies: ggui_dep)
+            </code>
+        </ul>
+    </li>
+    <li>Optionally add GGUI to CMake
+        <ul>
+            <li>Add the following lines to your CMakeLists.txt file:</li>
+            <code>
+# Find GGUI library
+find_library(GGUI_LIBRARY
+    NAMES GGUI
+    PATHS /path/to/GGUI
+    REQUIRED
+)
+
+# Include GGUI headers
+include_directories(/path/to/GGUI)
+
+# Create executable
+add_executable(main main.cpp)
+
+# Link with GGUI
+target_link_libraries(main ${GGUI_LIBRARY})
+            </code>
+        </ul>
+    </li>
+</ul>
+<p style="font-weight: bold;">
+    For more in-depth usage of GGUI see the Examples section.
+</p>
+</br></br>
+
+
