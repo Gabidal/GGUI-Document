@@ -1,27 +1,26 @@
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript" src="generateMenu.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="GGUI - Lightweight Terminal UI library documentation: tutorials, concepts, styling, and examples."/>
+    <meta property="og:title" content="GGUI Documentation"/>
+    <meta property="og:description" content="Explore guides, concepts, and examples for GGUI."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="img/logo.png"/>
+    <title>GGUI Docs</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/tokyo-night-dark.min.css">
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+    <script type="module" src="js/main.js"></script>
 </head>
 
-<body>
-    <div class="Static1" id="menu-container"></div>
-    
-    <div class="Static2" id="content-container"></div>
-    
-    <script>
-        init()
-
-        display_menu()
-        dev_display("default")  // Show the default window
-
-        // For dev
-        // dev_display("versions/0.1.8")
-    </script>
+<body data-theme="dark">
+    <div class="Static1" id="menu-container" role="navigation" aria-label="Documentation sections"></div>
+    <div class="Static2" id="content-container" role="main"></div>
+    <noscript>
+        JavaScript is required to view the documentation. Please enable it.
+    </noscript>
 </body>
 
 </html>
