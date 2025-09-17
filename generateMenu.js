@@ -204,20 +204,30 @@ function codify(){
 }
 
 function Goto(theme, Title_Name){
-    // Remove all spaces from the Title_Name
-    Title_Name = Title_Name.replace(/\s+/g, '');
+    // Remove all spaces from the Title_Name and normalize to lowercase
+    Title_Name = Title_Name.replace(/\s+/g, '').toLowerCase();
+    theme = theme.toLowerCase();
 
-    resourceName = theme + "/" + Title_Name + '.html'
-    
+    const resourceName = `${theme}/${Title_Name}.html`;
+
     history.pushState({ resource: resourceName }, "", `#${resourceName}`);
 
     fetch(resourceName)
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Failed to load resource: ${resourceName}`);
+        }
+        return response.text();
+    })
     .then(html => {
         document.getElementById('content-container').innerHTML = html;
-        Highlight_Links()
+        Highlight_Links();
         codify();
         hljs.highlightAll();
+    })
+    .catch(error => {
+        console.error(error);
+        document.getElementById('content-container').innerHTML = '<p>Content not found.</p>';
     });
 }
 
