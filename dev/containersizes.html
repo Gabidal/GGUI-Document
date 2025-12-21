@@ -1,0 +1,246 @@
+<h1>
+   Rant #1
+</h1>
+
+<p>
+    I like optimization, it is challenging and fun, which is why most of the time i tru to put as small container sizes for whatever.
+    As an example here is part of the IVector2 implementation:
+</p>
+<code>
+class IVector2{
+public:
+    short x = 0;  //Horizontal
+    short y = 0;  //Vertical
+
+    ...
+};
+</code>
+<p>
+    This is how the vector is in 0.1.8.2 And i was wondering if i needed to also unify some logic and make the element::width and element::height also signed short typed instead of the-
+    unsigned short they were. 
+
+    Because whose terminal is actually more than int16_t::max which is something like 32k? Anyway long story short, with lower bit size container types, the compiler doesn't always produce the most optimal output (at least in assembly).
+    Here is the example code i made to test this, note the function i made doesn't do anything its just some brain rot:
+</p>
+<code>
+    
+#define container int16_t
+#define transform int32_t
+
+template<typename T>
+struct IVector2 {
+    T x;
+    T y;
+};
+
+template<typename T>
+struct IVector3 {
+    T x;
+    T y;
+    T z;
+};
+
+class element {
+protected:
+    IVector2<container> dim;
+    IVector3<container> pos;
+    bool border;
+public:
+     transform hasBorder() const {return border; }
+     transform getWidth() const {return dim.x; }
+     transform getHeight() const {return dim.y; }
+
+     IVector3<transform> getPosition() const { return {pos.x, pos.y, pos.z}; }
+};
+
+IVector2<transform> getFittingDimensions(element* parent, element* child) {
+
+    IVector2<transform> minParentDimension = {
+        parent->hasBorder() + child->getPosition().x,
+        parent->hasBorder() + child->getPosition().y
+    };
+
+    IVector2<transform> maxParentDimension = {
+        parent->getWidth() - parent->hasBorder(),
+        parent->getHeight() - parent->hasBorder()
+    };
+
+    return {
+        minParentDimension.x + maxParentDimension.x,
+        minParentDimension.y - maxParentDimension.y
+    };
+}
+
+extern element* a;
+extern element* b;
+
+int32_t main() {
+    IVector2 res = getFittingDimensions(a, b);
+
+    return res.x + res.y;
+}
+</code>
+<p>
+    So the code basically stores in 16bit container size and then on use it returns them as 32bit. Here is the assembly it generated:
+</p>
+<p>
+    transformed(16->32):
+</p>
+<code>
+getFittingDimensions(element*, element*):
+    movzx   ecx, byte ptr [rdi + 10]
+    movsx   edx, word ptr [rsi + 4]
+    movsx   esi, word ptr [rsi + 6]
+    movsx   eax, word ptr [rdi]
+    add     eax, edx
+    movsx   edx, word ptr [rdi + 2]
+    lea     ecx, [rsi + 2*rcx]
+    sub     ecx, edx
+    shl     rcx, 32
+    or      rax, rcx
+    ret
+
+main:
+    mov     rax, qword ptr [rip + a@GOTPCREL]
+    mov     rax, qword ptr [rax]
+    mov     rcx, qword ptr [rip + b@GOTPCREL]
+    mov     rcx, qword ptr [rcx]
+    movzx   edx, byte ptr [rax + 10]
+    movsx   esi, word ptr [rcx + 4]
+    movsx   ecx, word ptr [rcx + 6]
+    movsx   edi, word ptr [rax]
+    add     edi, ecx
+    movsx   ecx, word ptr [rax + 2]
+    lea     eax, [rsi + 2*rdx]
+    add     eax, edi
+    sub     eax, ecx
+    ret
+</code>
+<p>
+    transformed(32->32):
+</p>
+<code>
+getFittingDimensions(element*, element*):
+    movzx   ecx, byte ptr [rdi + 20]
+    mov     rdx, qword ptr [rsi + 8]
+    mov     esi, edx
+    shr     rdx, 32
+    mov     eax, dword ptr [rdi]
+    lea     ecx, [rdx + 2*rcx]
+    sub     ecx, dword ptr [rdi + 4]
+    add     eax, esi
+    shl     rcx, 32
+    or      rax, rcx
+    ret
+
+main:
+    mov     rax, qword ptr [rip + a@GOTPCREL]
+    mov     rcx, qword ptr [rax]
+    mov     rax, qword ptr [rip + b@GOTPCREL]
+    mov     rax, qword ptr [rax]
+    movzx   edx, byte ptr [rcx + 20]
+    mov     rsi, qword ptr [rax + 8]
+    mov     eax, esi
+    shr     rsi, 32
+    mov     edi, dword ptr [rcx]
+    add     edi, eax
+    lea     eax, [rdi + 2*rdx]
+    sub     eax, dword ptr [rcx + 4]
+    add     eax, esi
+    ret
+</code>
+<p>
+    I would like you to focus on the getFittingDimensions and the loading opcodes it generated for the 32->32 and 16->32 variant
+</p>
+<code>
+getFittingDimensions(element*, element*):   # 16->32
+    movzx   ecx, byte ptr [rdi + 10]
+    movsx   edx, word ptr [rsi + 4]
+    movsx   esi, word ptr [rsi + 6]
+    movsx   eax, word ptr [rdi]
+    add     eax, edx
+    movsx   edx, word ptr [rdi + 2]
+    lea     ecx, [rsi + 2*rcx]
+    sub     ecx, edx
+    shl     rcx, 32
+    or      rax, rcx
+    ret
+
+getFittingDimensions(element*, element*):   # 32->32
+    movzx   ecx, byte ptr [rdi + 20]
+    mov     rdx, qword ptr [rsi + 8]
+    mov     esi, edx
+    shr     rdx, 32
+    mov     eax, dword ptr [rdi]
+    lea     ecx, [rdx + 2*rcx]
+    sub     ecx, dword ptr [rdi + 4]
+    add     eax, esi
+    shl     rcx, 32
+    or      rax, rcx
+    ret
+</code>
+<p>
+    Personally i think the compiler generated 16->32 is not the best it can be, for an example it could load them into bigger registers and then with shifting it would store the partial register values representing the member variables into volatile registers, since there are no function calls in the function either way, so its not even using all of the available registers.
+</p>
+<p>
+    This whole thing started with the "integer promotion" shenanigans the compiler was doing in GGUI source code and it really pissed me off, i tried to counter it by making something like this:
+</p>
+<code>
+    template(typename T)
+    class nonConvertable {
+    public:
+        T data;
+    
+        nonConvertable(T d)  {
+            data = d;
+        }
+    
+        explicit operator T*() const { return data; }
+    
+        constexpr T get() {return data; }
+    
+        constexpr nonConvertable operator+(nonConvertable other) {
+            return nonConvertable(data + other.data);
+        }
+    
+        constexpr nonConvertable operator-(nonConvertable other) {
+            return nonConvertable(data - other.data);
+        }
+    };
+</code>
+<p>
+    This basically would stop the compiler from casting the int16_t container sized values into int32_t via the integer promotion, but the outcome was still as bad as the transform:
+</p>
+<code>
+getFittingDimensions(element*, element*):   #containerSize as nonConvertable(int16_t)
+    movzx   ecx, byte ptr [rdi + 10]
+    movzx   eax, word ptr [rdi]
+    add     ax, word ptr [rsi + 4]
+    add     ecx, ecx
+    sub     cx, word ptr [rdi + 2]
+    add     cx, word ptr [rsi + 6]
+    shl     ecx, 16
+    movzx   eax, ax
+    or      eax, ecx
+    ret
+
+getFittingDimensions(element*, element*):   #containerSize as nonConvertable(int32_t)
+    movzx   ecx, byte ptr [rdi + 20]
+    mov     rdx, qword ptr [rsi + 8]
+    mov     esi, edx
+    shr     rdx, 32
+    mov     eax, dword ptr [rdi]
+    lea     ecx, [rdx + 2*rcx]
+    sub     ecx, dword ptr [rdi + 4]
+    add     eax, esi
+    shl     rcx, 32
+    or      rax, rcx
+    ret
+</code>
+<p>
+    Again we see the weird non-packing of memory values into registers and the complete lack of Rx(x) volatile registers: R8, R9, R10, and R11.
+    Probably something that has to do with REX.x bits making the instructions longer when using Rx(x) registers, anyway since i can't go ask intel and AMD to change their cpu best bet is to use int32_t containers for sparse objects and int16_t for dense objects.
+</p>
+<p>
+    Rant nro 1 over.
+</p>

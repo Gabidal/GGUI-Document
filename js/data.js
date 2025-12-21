@@ -22,6 +22,9 @@ export const Headers = {
         "SwitchBox Example",
         "TextField Example"
     ],
+    Dev: [
+        "Container Sizes"
+    ],
     Versions: ["0.1.8"]
 };
 
