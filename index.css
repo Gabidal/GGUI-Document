@@ -47,15 +47,18 @@ body{
 .Logo{
     max-width: 100%;
     max-height: auto;
+    margin: auto;
+    display: block;
 }
 
 .Static1{
     border-right: 1px solid var(--accent);
     overflow-y: auto;
     overflow-x: hidden;
-    width: 15%;
+    width: 30%;
+    max-width: 20em;;
     height: 100%;
-    background-color: #10182c;
+    background-color: var(--bg);
 }
 
 /* Hide scrollbar for Static1 (menu container) */
@@ -74,6 +77,150 @@ body{
     height: 100%;
 }
 
+.menu-hide-btn, .menu-unhide-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent);
+    background: var(--accent-2);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9em;
+    padding: 0.35em 0.6em;
+    cursor: pointer;
+}
+
+.menu-hide-btn {
+    margin: 0.5em 0.75em 0.25em 0.75em;
+    width: calc(100% - 1.5em);
+}
+
+.menu-unhide-btn {
+    display: none;
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 50;
+}
+
+.searchWrapper {
+    margin: 0.5em 0.75em 0.5em 0.75em;
+    padding: 0.4em 0.6em;
+    border: 1px solid var(--accent);
+    background: var(--accent-2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    box-sizing: border-box;
+}
+
+.searchBox {
+    width: 100%;
+    padding: 0.35em 0.5em;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95em;
+    box-sizing: border-box;
+}
+
+.searchBox::placeholder {
+    color: var(--muted);
+}
+
+.searchBox:focus {
+    outline: none;
+    border-color: var(--link-hover);
+    box-shadow: 0 0 0 2px rgba(76, 153, 221, 0.2);
+}
+
+.searchResult {
+    border-top: 1px solid var(--accent);
+    padding-top: 0.25em;
+    max-height: 35vh;
+    overflow-y: auto;
+}
+
+.searchResult:empty {
+    display: none;
+}
+
+.searchResult .Link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    min-width: 0;
+    padding: 0.25em 0.35em;
+    text-decoration: none;
+    border-radius: 0.2em;
+}
+
+.searchResultTitle {
+    flex: 0 0 auto;
+}
+
+.searchResultSnippet {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: var(--muted);
+    opacity: 25%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: small;
+}
+
+.searchResult .Link:hover {
+    background: var(--accent);
+    color: var(--text);
+}
+
+body.menu-hidden .Static1 {
+    width: 0;
+    min-width: 0;
+    max-width: 0;
+    border-right: none;
+    overflow: hidden;
+}
+
+body.menu-hidden #menu-unhide-btn {
+    display: inline-flex;
+}
+
+body.menu-hidden #menu-hide-btn {
+    display: none;
+}
+
+@media (orientation: portrait) {
+    .Static1{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        border-right: none;
+        z-index: 40;
+        transform: translateX(0);
+        transition: transform 0.2s ease;
+    }
+
+    body.menu-hidden .Static1 {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        transform: translateX(-100%);
+        border-right: none;
+    }
+
+    .Static2{
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .USE {
     font-family: monospace;
     color: chartreuse;
@@ -89,7 +236,7 @@ li{
     transition: background 0.2s, color 0.2s;
 }
 
-li:hover{ background: var(--accent); color: #e0e0e0; }
+li:hover{ background: var(--accent); color: var(--text); }
 
 .Link{
     display: inline;
@@ -151,7 +298,7 @@ p {
 }
 
 .Static2 ul li {
-    color: #c5d4e2;
+    color: var(--muted);
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -186,7 +333,7 @@ h1 {
     font-family: 'system-ui';
     font-size: 2.5em;
     font-weight: 500;
-    color: #dae2eb;
+    color: var(--text);
     text-align: center;
     padding-bottom: 1em;
     padding-top: 0.5em;
@@ -206,7 +353,7 @@ h2 {
     font-family: 'system-ui';
     font-size: 2em;
     font-weight: 400;
-    color: #d6d6d6;
+    color: var(--text);
     text-align: center;
     padding-bottom: 0.5em;
     padding-top: 0.5em;
@@ -283,7 +430,7 @@ table {
     border-collapse: collapse;
     width: 80%;
     margin-left: 6.5em;
-    color: #cbd5e1;
+    color: var(--text);
     font-size: 1em;
 }
 
@@ -296,7 +443,7 @@ table th, table td {
 
 table th {
     background: var(--accent-2);
-    color: #e0e0e0;
+    color: var(--text);
     font-weight: bold;
 }
 

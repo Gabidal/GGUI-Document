@@ -3,6 +3,26 @@ import { goto } from './navigation.js';
 
 let headers = clone(Headers);
 const headerBackup = reverseLists(clone(Headers));
+let menuToggleInitialized = false;
+let menuContainer = null;
+
+const isPortraitView = () => {
+    if (window.matchMedia) {
+        return window.matchMedia('(orientation: portrait)').matches;
+    }
+    return window.innerHeight > window.innerWidth;
+};
+
+const setMenuHidden = (hidden) => {
+    if (!menuContainer) return;
+    document.body.classList.toggle('menu-hidden', hidden);
+    menuContainer.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+};
+
+export const hideMenuIfPortrait = () => {
+    if (!isPortraitView()) return;
+    setMenuHidden(true);
+};
 
 export const changeOrder = (alphabetical) => {
     if (alphabetical) {
@@ -36,11 +56,15 @@ export const generateList = () => {
             Sub_Element.innerText = Sub_Item;
             Sub_Element.setAttribute('role', 'link');
             Sub_Element.tabIndex = 0;
-            Sub_Element.onclick = () => goto(Header, Sub_Item);
+            Sub_Element.onclick = () => {
+                goto(Header, Sub_Item);
+                hideMenuIfPortrait();
+            };
             Sub_Element.onkeydown = (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     goto(Header, Sub_Item);
+                    hideMenuIfPortrait();
                 }
             };
             Item.appendChild(Sub_Element);
@@ -68,6 +92,7 @@ export const displayMenu = async () => {
         container.innerHTML = html;
         const menuUl = document.getElementById('menu');
         if (menuUl) menuUl.setAttribute('role', 'tree');
+        initMenuToggle();
         generateList();
     } catch (e) {
         console.error(e);
@@ -76,3 +101,28 @@ export const displayMenu = async () => {
 
 // expose for other modules needing headers list
 export const getHeaders = () => headers;
+
+const initMenuToggle = () => {
+    if (menuToggleInitialized) return;
+
+    const hideBtn = document.getElementById('menu-hide-btn');
+    const unhideBtn = document.getElementById('menu-unhide-btn');
+    const container = document.getElementById('menu-container');
+
+    if (!hideBtn || !unhideBtn || !container) return;
+
+    menuContainer = container;
+
+    hideBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        setMenuHidden(true);
+    });
+
+    unhideBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        setMenuHidden(false);
+    });
+
+    setMenuHidden(false);
+    menuToggleInitialized = true;
+};

@@ -10,9 +10,14 @@ const highlightAll = () => {
     }
 };
 
+export const toResourceName = (theme, titleName) => {
+    const themePart = (theme || '').toLowerCase();
+    const titlePart = (titleName || '').replace(/\s+/g, '').toLowerCase();
+    return `${themePart}/${titlePart}.html`;
+};
+
 export const goto = async (theme, titleName) => {
-    const Title_Name = titleName.replace(/\s+/g, '').toLowerCase();
-    const resourceName = `${theme.toLowerCase()}/${Title_Name}.html`;
+    const resourceName = toResourceName(theme, titleName);
 
     history.pushState({ resource: resourceName }, '', `#${resourceName}`);
     await loadResource(resourceName, theme, titleName);
