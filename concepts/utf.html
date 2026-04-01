@@ -37,6 +37,6 @@ UTF('a')    // Initialized with the default GGUI foreground and background color
     Super String
 </h1>
 <p>
-    Because of c++17 constexpr limitations and the goal to get as much as optimization possible at compile-time, Super_String class is utilized with predefined array length to host the given amount of <Compact_Strings class=""></Compact_Strings>
-    The whole reason of using Super_String class is because while rendering we don't edit much, we just cumulate more and more into a specific amount of Compact_Strings, not needing to actually add the Strings together, Super_String instead just hold on to the Compact_Strings as individual points in its array and only once liquifies them at the final stage of render right before console buffer write.
+    Because of c++17 constexpr limitations and the goal to get as much as optimization possible at compile-time, Super_String class is utilized with predefined array length to host the given amount of Compact_Strings
+    The whole reason of using Super_String class is because while rendering we don't edit much, we just accumulate more and more into a specific amount of Compact_Strings, not needing to actually add the Strings together, Super_String instead just hold on to the Compact_Strings as individual points in its array and only once liquefies them at the final stage of render right before console buffer write.
 </p>

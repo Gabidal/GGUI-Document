@@ -3,15 +3,15 @@
 </h1>
 <p>
     In GGUI position style can take float values ranging from [0.0f, 1.0f] and integer numbers between [-s16int, +s16int].
-    When using decimal values, GGUI will use them as relative value to its parent width if x and height if y.
-    Z does not support relative value, since current Zs value is always parent->Z+1.
+    When using decimal values, GGUI will use them as relative values to its parent's width for x and height for y.
+    Z does not support relative value, since current Z's value is always parent->Z+1.
 </p>
 <p style="color: red">
-    Note: When calculating the current element dimensions is also considered, so that when position is at 100%, we subtract the dimension value from the position when its transformed into absolute values.
+    Note: When calculating the current element dimensions is also considered, so that when position is at 100%, we subtract the dimension value from the position when it's transformed into absolute values.
 </p>
 
     <code>
-// Giving integer values to position position will use them as relative positions inside the parents area.
+// Giving integer values to position will use them as relative positions inside the parent's area.
 position(IVector3(...))
 position(IVector2(...))
 
@@ -25,4 +25,3 @@ position(0.0f, 0)   // this is top middle
 // The floating point values use center origin values, so that you can do something like this.
 position(STYLES::top + STYLES::left)
     </code>
-</code>

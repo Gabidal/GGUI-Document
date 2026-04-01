@@ -2,12 +2,12 @@
     Styling - CSS Styling In HTML Form
 </h1>
 <p>
-    Style GGUI was introduced in 0.1.8 update with the dynamic styling system, where on user can add different types of styles while also structuring their whole application similar how it would be displayed.
-    in STYLING_INTERNAL::* namespace resides the style_base class, which contains the necessaries for the addition for OOP styled style objects which are passed at construction time passed either with && or & reference.
+    Style GGUI was introduced in the 0.1.8 update with the dynamic styling system, where a user can add different types of styles while also structuring their whole application similar to how it would be displayed.
+    In the STYLING_INTERNAL::* namespace resides the style_base class, which contains the necessities for the addition of OOP-styled style objects which are passed at construction time, either with && or & reference.
 </p>
 
 <code title="Basic use of style class">
-// Here we have two style_base inheritants which are added together, returning a new style_base* which can be added further or given to an renderable element object.
+// Here we have two style_base inheritors which are added together, returning a new style_base* which can be added further or given to a renderable element object.
 textColor(COLOR::RED) | backgroundColor(COLOR::BLUE)
 </code>
 
@@ -30,7 +30,7 @@ element* someUpperElement = new element(
         ))
     )) | 
 
-    // You can also use the child class to skip spamming nodes everywhere, although its not that much cleaner.
+    // You can also use the child class to skip spamming nodes everywhere, although it's not that much cleaner.
     childs({
         new element(
             // ....

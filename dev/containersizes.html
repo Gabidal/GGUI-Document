@@ -3,7 +3,7 @@
 </h1>
 
 <p>
-    I like optimization, it is challenging and fun, which is why most of the time i tru to put as small container sizes for whatever.
+    I like optimization, it is challenging and fun, which is why most of the time I try to put as small container sizes for whatever.
     As an example here is part of the IVector2 implementation:
 </p>
 <code>
@@ -16,11 +16,11 @@ public:
 };
 </code>
 <p>
-    This is how the vector is in 0.1.8.2 And i was wondering if i needed to also unify some logic and make the element::width and element::height also signed short typed instead of the-
+    This is how the vector is in 0.1.8.2, and I was wondering if I needed to also unify some logic and make the element::width and element::height also signed short typed instead of the-
     unsigned short they were. 
 
     Because whose terminal is actually more than int16_t::max which is something like 32k? Anyway long story short, with lower bit size container types, the compiler doesn't always produce the most optimal output (at least in assembly).
-    Here is the example code i made to test this, note the function i made doesn't do anything its just some brain rot:
+    Here is the example code i made to test this:
 </p>
 <code>
     
@@ -180,10 +180,10 @@ getFittingDimensions(element*, element*):   # 32->32
     ret
 </code>
 <p>
-    Personally i think the compiler generated 16->32 is not the best it can be, for an example it could load them into bigger registers and then with shifting it would store the partial register values representing the member variables into volatile registers, since there are no function calls in the function either way, so its not even using all of the available registers.
+    Personally, I think the compiler generated 16->32 is not the best it can be, for example it could load them into bigger registers and then with shifting it would store the partial register values representing the member variables into volatile registers, since there are no function calls in the function either way, so it's not even using all of the available registers.
 </p>
 <p>
-    This whole thing started with the "integer promotion" shenanigans the compiler was doing in GGUI source code and it really pissed me off, i tried to counter it by making something like this:
+    This whole thing started with the "integer promotion" shenanigans the compiler was doing in GGUI source code and it really pissed me off, I tried to counter it by making something like this:
 </p>
 <code>
     template(typename T)
@@ -239,7 +239,7 @@ getFittingDimensions(element*, element*):   #containerSize as nonConvertable(int
 </code>
 <p>
     Again we see the weird non-packing of memory values into registers and the complete lack of Rx(x) volatile registers: R8, R9, R10, and R11.
-    Probably something that has to do with REX.x bits making the instructions longer when using Rx(x) registers, anyway since i can't go ask intel and AMD to change their cpu best bet is to use int32_t containers for sparse objects and int16_t for dense objects.
+    Probably something that has to do with REX.x bits making the instructions longer when using Rx(x) registers, anyway since I can't go ask Intel and AMD to change their CPU, the best bet is to use int32_t containers for sparse objects and int16_t for dense objects.
 </p>
 <p>
     Rant nro 1 over.
