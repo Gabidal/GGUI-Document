@@ -26,8 +26,11 @@ body{
 .gif-img-floater {
     position: fixed; 
     right: 1vw; 
-    max-width: 25%;
+    max-width: 30%;
+    min-width: 10em;
+    min-height: 10em;
     animation: breathe 5s ease-in-out infinite;
+    object-fit: contain;
 }
 
 .float-img-left {
@@ -288,7 +291,7 @@ li:hover{ background: var(--accent); color: var(--text); }
 
 p {
     color: var(--muted);
-    max-width: 90%;
+    max-width: 95%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5em;
@@ -299,7 +302,7 @@ p {
 
 .Static2 ul li {
     color: var(--muted);
-    max-width: 90%;
+    max-width: 95%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5em;
@@ -311,7 +314,7 @@ p {
 }
 
 pre {
-    max-width: 90%;
+    max-width: 95%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1.5em;
