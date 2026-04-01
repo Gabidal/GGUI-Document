@@ -54,6 +54,10 @@ body{
     display: block;
 }
 
+#menu {
+    margin-bottom: 5em;
+}
+
 .Static1{
     border-right: 1px solid var(--accent);
     overflow-y: auto;
@@ -416,14 +420,14 @@ h2::after {
 /* Specific styling for Static1 (menu) scroll indicator */
 .Static1 ul.scroll-indicator::after {
     left: 0;
-    width: 13%;
+    width: 100%;
     background: linear-gradient(to top, rgba(66, 128, 194, 0.2), transparent);
     height: 2vh;
 }
 
 /* Specific styling for Static2 (content) scroll indicator */
 .Static2.scroll-indicator::after {
-    left: 13%;
+    left: 0;
     right: 0;
     background: linear-gradient(to top, rgba(66, 128, 194, 0.2), transparent);
     height: 3.5vh;
