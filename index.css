@@ -35,6 +35,10 @@ body{
 .gif-float-right {
     position: fixed; 
     right: 1vw; 
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
 }
 
 .float-left {

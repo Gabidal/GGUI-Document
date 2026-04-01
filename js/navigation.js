@@ -1,4 +1,5 @@
 import { codify, setTitle } from './utils.js';
+import { initItemDrag } from './dragItems.js';
 import { Headers } from './data.js';
 
 // Simple in-memory cache for fetched HTML
@@ -43,6 +44,7 @@ export const loadResource = async (resourceName, theme = '', titleName = '') => 
         container.querySelectorAll('img').forEach(img => {
             img.setAttribute('loading', 'lazy');
         });
+        initItemDrag(container);
         // Re-highlight code
         codify();
         highlightAll();
